@@ -4,6 +4,7 @@ Official website for **QUANTUM SPIKE - 2026**: International Conference on Conte
 
 - **Official Google Site Reference**: [sites.google.com/view/quantum-spike-2026/home](https://sites.google.com/view/quantum-spike-2026/home)
 - **Official Google Form Registration**: [forms.gle/maMGGFNcUTv7ndWf8](https://forms.gle/maMGGFNcUTv7ndWf8)
+- **Personal Hosting** : [quantum-spike-2026](https://quantum-spike-2026.onrender.com/) , [DB](https://quantum-spike-2026.onrender.com/api/abstract)
 - **Dates**: 08–09 October 2026
 - **Venue**: Bankura Sammilani College, Kenduadihi, Bankura, West Bengal - 722102
 

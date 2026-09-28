@@ -154,6 +154,28 @@ export default function Home() {
     setTimeout(() => setCopiedKey(null), 2500);
   };
 
+  const handleCommitteeNav = (tab: "core" | "advisory" | "organizing" | "volunteers") => {
+    setActiveCommitteeTab(tab);
+    setOpenDropdown(null);
+    setMenuOpen(false);
+
+    setTimeout(() => {
+      const el = document.getElementById("committees");
+      if (el) {
+        const navOffset = 85;
+        const bodyRect = document.body.getBoundingClientRect().top;
+        const elementRect = el.getBoundingClientRect().top;
+        const elementPosition = elementRect - bodyRect;
+        const offsetPosition = elementPosition - navOffset;
+
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: "smooth",
+        });
+      }
+    }, 40);
+  };
+
   const handleNavClick = (subItem: NavSubItem) => {
     if (subItem.isModal) {
       setBrochureOpen(true);
@@ -163,6 +185,25 @@ export default function Home() {
     }
     setOpenDropdown(null);
     setMenuOpen(false);
+
+    if (subItem.href && subItem.href.startsWith("#")) {
+      const targetId = subItem.href.substring(1);
+      setTimeout(() => {
+        const el = document.getElementById(targetId);
+        if (el) {
+          const navOffset = 85;
+          const bodyRect = document.body.getBoundingClientRect().top;
+          const elementRect = el.getBoundingClientRect().top;
+          const elementPosition = elementRect - bodyRect;
+          const offsetPosition = elementPosition - navOffset;
+
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: "smooth",
+          });
+        }
+      }, 40);
+    }
   };
 
   return (
@@ -248,140 +289,86 @@ export default function Home() {
                     <ChevronDown size={14} className={`dropdown-icon ${isOpen ? "rotate" : ""}`} />
                   </button>
 
-                  {/* Committees Mega Menu (3 Side-by-Side Columns: Core Left | Advisory & Organizing Middle | Volunteers Right) */}
+                  {/* Committees Dropdown (Matches user diagram: Core Leadership | Advisory (top) & Organizing (bottom) | Student Volunteers) */}
                   {cat.isMegaCommittees && isOpen && (
                     <div
-                      className="nav-dropdown-menu mega-menu-committees"
+                      className="nav-dropdown-menu committee-quick-menu"
                       onMouseEnter={() => handleMouseEnter(cat.title)}
                       onMouseLeave={handleMouseLeave}
                     >
-                      <div className="mega-menu-header">
-                        <div className="mega-header-title">
-                          <Users size={16} className="text-cyan-400" />
-                          <span>CONFERENCE COMMITTEES &amp; LEADERSHIP</span>
-                        </div>
-                        <span className="mega-header-sub">Department of Physics • Bankura Sammilani College</span>
-                      </div>
-
-                      <div className="mega-menu-grid">
-                        {/* Column 1: Core Leadership (Left) */}
-                        <div className="mega-col mega-col-left">
-                          <div className="mega-col-heading">
-                            <span className="col-badge badge-cyan">CORE LEADERSHIP</span>
-                            <h4>Patron, Chair &amp; Convenor</h4>
+                      <div className="committee-quick-grid">
+                        {/* 1. Core Leadership (Left) */}
+                        <button
+                          type="button"
+                          className="committee-quick-btn"
+                          onClick={() => handleCommitteeNav("core")}
+                          title="View Core Leadership (Patron, Chairperson, Convenor)"
+                        >
+                          <div className="committee-btn-icon cyan">
+                            <Users size={18} />
                           </div>
-
-                          <div className="mega-core-list">
-                            {site.people.core.map((p) => (
-                              <div
-                                key={p.name}
-                                className="mega-leader-item"
-                                onClick={() => handleNavClick({ href: "#committees", tab: "core" })}
-                                role="button"
-                                tabIndex={0}
-                              >
-                                <span className="leader-role-tag">{p.designation}</span>
-                                <strong>{p.name}</strong>
-                                <span className="leader-desc">{p.role}</span>
-                              </div>
-                            ))}
+                          <div className="committee-btn-content">
+                            <span className="committee-btn-label">Core leadership</span>
+                            <span className="committee-btn-sub">Patron, Chair &amp; Convenor</span>
                           </div>
+                        </button>
 
-                          <a
-                            href="#committees"
-                            className="mega-view-btn"
-                            onClick={() => handleNavClick({ href: "#committees", tab: "core" })}
+                        {/* Vertical Divider "|" */}
+                        <div className="committee-quick-divider" aria-hidden="true" />
+
+                        {/* 2. Advisory Committee & Organizing Committee (Middle - Upor Niche) */}
+                        <div className="committee-quick-stack">
+                          <button
+                            type="button"
+                            className="committee-quick-btn"
+                            onClick={() => handleCommitteeNav("advisory")}
+                            title="View Advisory Committee"
                           >
-                            <span>Explore Core Leadership</span>
-                            <ArrowRight size={13} />
-                          </a>
-                        </div>
-
-                        {/* Column 2: Advisory (Top) & Organizing (Bottom) (Middle) */}
-                        <div className="mega-col mega-col-mid">
-                          {/* Top: Advisory Committee */}
-                          <div className="mega-subgroup">
-                            <div className="mega-col-heading">
-                              <span className="col-badge badge-blue">ADVISORY BOARD</span>
-                              <h4>Advisory Committee ({site.people.advisory.length})</h4>
+                            <div className="committee-btn-icon blue">
+                              <Award size={17} />
                             </div>
-                            <p className="mega-desc-text">
-                              Distinguished physicists and academicians guiding the conference:
-                            </p>
-                            <div className="mega-names-snippet">
-                              <span>Prof. Prasanta K. Panigrahi (SOA)</span>
-                              <span>Prof. Krishnendu Sengupta (IACS)</span>
-                              <span>Prof. Utpal Roy (IIT Patna) &amp; more</span>
+                            <div className="committee-btn-content">
+                              <span className="committee-btn-label">advisory committee</span>
+                              <span className="committee-btn-sub">Distinguished Physicists</span>
                             </div>
-                            <a
-                              href="#committees"
-                              className="mega-inline-link"
-                              onClick={() => handleNavClick({ href: "#committees", tab: "advisory" })}
-                            >
-                              <span>View All 7 Advisory Members →</span>
-                            </a>
-                          </div>
+                          </button>
 
-                          <div className="mega-inner-divider" />
+                          <div className="committee-stack-sep" />
 
-                          {/* Bottom: Organizing Committee */}
-                          <div className="mega-subgroup">
-                            <div className="mega-col-heading">
-                              <span className="col-badge badge-purple">FACULTY TEAM</span>
-                              <h4>Organizing Committee ({site.people.organizing.length})</h4>
-                            </div>
-                            <p className="mega-desc-text">
-                              Faculty members, Department of Physics &amp; IQAC:
-                            </p>
-                            <div className="mega-names-snippet">
-                              <span>Dr. Chakradhar Rajowar (HOD)</span>
-                              <span>Dr. Uttam Mondal (Associate Prof)</span>
-                              <span>Dr. Pradipta Chakraborty &amp; faculty</span>
-                            </div>
-                            <a
-                              href="#committees"
-                              className="mega-inline-link"
-                              onClick={() => handleNavClick({ href: "#committees", tab: "organizing" })}
-                            >
-                              <span>View All 6 Faculty Organizers →</span>
-                            </a>
-                          </div>
-                        </div>
-
-                        {/* Column 3: Student Volunteers (Right) */}
-                        <div className="mega-col mega-col-right">
-                          <div className="mega-col-heading">
-                            <span className="col-badge badge-green">STUDENT TEAM</span>
-                            <h4>Student Volunteers ({site.people.volunteers.length})</h4>
-                          </div>
-
-                          <div className="mega-volunteers-list">
-                            {site.people.volunteers.map((v) => (
-                              <div
-                                key={v.name}
-                                className="mega-volunteer-item"
-                                onClick={() => handleNavClick({ href: "#committees", tab: "volunteers" })}
-                                role="button"
-                                tabIndex={0}
-                              >
-                                <div className="volunteer-row-top">
-                                  <strong>{v.name}</strong>
-                                  <span className="v-pill">BSC Phys</span>
-                                </div>
-                                <span className="v-role">{v.role}</span>
-                              </div>
-                            ))}
-                          </div>
-
-                          <a
-                            href="#committees"
-                            className="mega-view-btn"
-                            onClick={() => handleNavClick({ href: "#committees", tab: "volunteers" })}
+                          <button
+                            type="button"
+                            className="committee-quick-btn"
+                            onClick={() => handleCommitteeNav("organizing")}
+                            title="View Organizing Committee"
                           >
-                            <span>View Volunteers Profile</span>
-                            <ArrowRight size={13} />
-                          </a>
+                            <div className="committee-btn-icon purple">
+                              <Briefcase size={17} />
+                            </div>
+                            <div className="committee-btn-content">
+                              <span className="committee-btn-label">Organizing committee</span>
+                              <span className="committee-btn-sub">Physics Faculty &amp; IQAC</span>
+                            </div>
+                          </button>
                         </div>
+
+                        {/* Vertical Divider "|" */}
+                        <div className="committee-quick-divider" aria-hidden="true" />
+
+                        {/* 3. Student Volunteers (Right) */}
+                        <button
+                          type="button"
+                          className="committee-quick-btn"
+                          onClick={() => handleCommitteeNav("volunteers")}
+                          title="View Student Volunteers"
+                        >
+                          <div className="committee-btn-icon green">
+                            <GraduationCap size={18} />
+                          </div>
+                          <div className="committee-btn-content">
+                            <span className="committee-btn-label">student volunteer</span>
+                            <span className="committee-btn-sub">Student Organizing Team</span>
+                          </div>
+                        </button>
                       </div>
                     </div>
                   )}

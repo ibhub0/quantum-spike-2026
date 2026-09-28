@@ -1,8 +1,6 @@
 export interface Speaker {
   name: string;
   institution: string;
-  designation?: string;
-  topic?: string;
   image: string;
 }
 
@@ -10,22 +8,17 @@ export interface LeadershipPerson {
   name: string;
   role: string;
   designation: string;
-  image?: string;
-  department?: string;
+  image: string;
 }
 
 export interface CommitteeMember {
   name: string;
   role: string;
-  institution?: string;
 }
 
-export interface ScheduleItem {
-  time: string;
-  title: string;
-  details: string;
-  speaker?: string;
-  badge?: string;
+export interface Volunteer {
+  name: string;
+  role: string;
 }
 
 export interface DeadlineItem {
@@ -38,17 +31,22 @@ export interface DeadlineItem {
 export const site = {
   name: "Quantum Spike",
   edition: "2026",
-  fullTitle: "QUANTUM SPIKE - 2026",
+  fullTitle: "QUANTUM SPIKE – 2026",
   subtitle: "International Conference on Contemporary Physics, Optics and Emerging Technologies",
   dates: "08–09 October 2026",
   isoStartDate: "2026-10-08T09:30:00+05:30",
   isoEndDate: "2026-10-09T17:30:00+05:30",
+  themeQuote: "Exploring Frontiers : From Fundamental Physics to Real-World Technologies",
+  motto: "Ideas Today | Innovations Tomorrow",
+  pillars: "SCIENCE | COLLABORATION | SOCIETY",
+  creatorCredit: "Made & Maintained by Mrinmoy Pal",
+
+  logo: "/images/quantum-spike-logo.jpg",
 
   funding: {
     agency: "ANUSANDHAN NATIONAL RESEARCH FOUNDATION (ANRF)",
     scheme: "(SERB-DST) Core Research Grant Funded",
     tagline: "Science for A Brighter Tomorrow",
-    grantNotice: "CRG / ANRF Project Sanctioned",
     logo: "/images/anrf-logo.jpg",
   },
 
@@ -57,30 +55,26 @@ export const site = {
     established: "1948",
     department: "Department of Physics",
     accreditation: "NAAC Accredited B++ (CGPA - 2.97)",
-    iqac: "Internal Quality Assurance Cell (IQAC)",
+    iqac: "IQAC, Bankura Sammilani College",
     affiliation: "Affiliated to Bankura University",
     address: "Kenduadihi, Bankura, West Bengal - 722102, India",
     campusImage: "/images/venue-college.jpg",
-    logo: "/images/college-logo.jpg",
+    logo: "/images/college-logo.png",
     mapEmbedUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3655.834456561141!2d87.06734157589255!3d23.23847770857319!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39f7af4d306b6183%3A0x6b63ca0c6ec6fe3e!2sBankura%20Sammilani%20College!5e0!3m2!1sen!2sin!4v1727521000000!5m2!1sen!2sin",
     mapDirectLink: "https://maps.google.com/?q=Bankura+Sammilani+College",
   },
 
   deadlines: [
-    { label: "Registration Opens", date: "10 September 2026", active: true },
-    { label: "Abstract Submission Deadline", date: "25 September 2026", active: true },
-    { label: "Acceptance Intimation", date: "30 September 2026", active: true },
-    { label: "Registration Closes", date: "05 October 2026", active: true },
-    { label: "Conference Dates", date: "08–09 October 2026", active: true, highlight: true },
+    { label: "Registration Opens", date: "10th September, 2026", active: true },
+    { label: "Abstract Submission Deadline", date: "25th September, 2026", active: true },
+    { label: "Acceptance Intimation", date: "30th September, 2026", active: true },
+    { label: "Registration Closes", date: "05th October, 2026", active: true },
+    { label: "Conference Dates", date: "October 08 – 09, 2026", active: true, highlight: true },
   ] as DeadlineItem[],
 
-  registrationOpen: "10 September 2026",
-  registrationClose: "05 October 2026",
+  registrationOpen: "10th September, 2026",
+  registrationClose: "05th October, 2026",
   email: "quantumspike2026@gmail.com",
-  logo: "/images/quantum-spike-logo.jpg",
-  themeQuote: "Exploring Frontiers : From Fundamental Physics to Real-World Technologies",
-  motto: "Ideas Today | Innovations Tomorrow",
-  pillars: "SCIENCE | COLLABORATION | SOCIETY",
 
   links: {
     officialSite: "https://sites.google.com/view/quantum-spike-2026/home",
@@ -92,43 +86,43 @@ export const site = {
 
   fees: [
     {
-      category: "Students (UG / PG)",
-      amount: "₹300",
-      inr: 300,
-      description: "For undergraduate and post-graduate students in physical sciences.",
+      category: "Students",
+      amount: "300",
+      symbol: "₹",
+      description: "Undergraduate and postgraduate students in physical & allied sciences.",
       perks: [
-        "Full conference kit & delegate bag",
+        "Conference delegate kit & official badge",
         "Participation certificate",
-        "Access to all keynote lectures & oral sessions",
-        "Lunch & refreshments for both days",
+        "Access to all keynote & technical sessions",
+        "Lunch and refreshments for both days",
       ],
       popular: true,
     },
     {
-      category: "PhD / Research Scholars",
-      amount: "₹500",
-      inr: 500,
-      description: "For active research scholars & doctoral candidates.",
+      category: "PhD / Research Scholar",
+      amount: "500",
+      symbol: "₹",
+      description: "Research scholars and doctoral candidates actively pursuing research.",
       perks: [
-        "Oral or poster presentation slot",
-        "Presentation certificate",
-        "Conference kit & abstract proceedings",
-        "Interactive networking sessions with scientists",
-        "Lunch & refreshments for both days",
+        "Oral or poster paper presentation slot",
+        "Presentation certificate & abstract publication",
+        "Delegate kit & abstract proceeding volume",
+        "Direct networking with national & international experts",
+        "Lunch and refreshments for both days",
       ],
       popular: false,
     },
     {
-      category: "Faculty Members / Scientists",
-      amount: "₹1000",
-      inr: 1000,
-      description: "For faculty, professors, post-docs, and institutional scientists.",
+      category: "Faculty Members",
+      amount: "1000",
+      symbol: "₹",
+      description: "Faculty members, educators, professors, and scientists.",
       perks: [
-        "Invited delegate privilege & kit",
-        "Oral presentation & chairing consideration",
-        "Certificate of participation / presentation",
+        "Full conference kit & official abstract proceedings",
+        "Oral presentation & session chairing opportunity",
+        "Faculty certificate of participation / presentation",
         "Special High Tea & VIP networking luncheon",
-        "Complimentary abstract volume",
+        "Institutional recognition & networking",
       ],
       popular: false,
     },
@@ -142,156 +136,91 @@ export const site = {
     branch: "BANKURA BRANCH",
     ifsc: "IDIB000B624",
     branchCode: "04410",
-    upiNote: "Scan the QR code with GPay, PhonePe, Paytm, BHIM or any UPI app. Take a screenshot of the payment receipt with UTR / Transaction Reference ID.",
+    note: "After making the payment via UPI QR Code or Bank Transfer, please keep the Transaction ID / Payment Screenshot ready to upload while filling out the Google Form registration.",
   },
 
   topics: [
-    {
-      title: "Ultracold Atomic Gases",
-      desc: "Bose-Einstein Condensation (BEC), optical lattices, Fermi gases, topological states, and quantum superfluidity.",
-      icon: "Atom",
-    },
-    {
-      title: "Quantum Information",
-      desc: "Quantum algorithms, quantum cryptography (QKD), quantum error correction, and entanglement theory.",
-      icon: "Cpu",
-    },
-    {
-      title: "Quantum Optics",
-      desc: "Non-classical states of light, cavity quantum electrodynamics, photon entanglement, and quantum metrology.",
-      icon: "Sparkles",
-    },
-    {
-      title: "Condensed Matter Physics",
-      desc: "Strongly correlated electron systems, high-Tc superconductors, 2D materials, and topological insulators.",
-      icon: "Layers",
-    },
-    {
-      title: "Nanomaterials",
-      desc: "Synthesis, characterization, functional 2D/3D nanostructures, quantum dots, and green energy applications.",
-      icon: "Microscope",
-    },
-    {
-      title: "Quantum Devices",
-      desc: "Superconducting circuits, solid-state qubits, single photon detectors, and spintronics architectures.",
-      icon: "Zap",
-    },
-    {
-      title: "Nuclear Physics",
-      desc: "Nuclear reaction dynamics, nuclear structure, nucleosynthesis, and high-energy physics probes.",
-      icon: "Radioactive",
-    },
-    {
-      title: "Optics & Photonics",
-      desc: "Nonlinear optics, ultrafast laser spectroscopy, plasmonics, and integrated photonic circuits.",
-      icon: "Sun",
-    },
-    {
-      title: "Fibre Optics",
-      desc: "Photonic crystal fibers, optical communication systems, distributed optical sensors, and dispersion control.",
-      icon: "Activity",
-    },
-    {
-      title: "Emerging Technologies",
-      desc: "Quantum sensors, AI & machine learning in physical sciences, sustainable clean energy devices, and quantum materials.",
-      icon: "Compass",
-    },
+    "Ultracold atomic Gases",
+    "Quantum Information",
+    "Quantum Optics",
+    "Condensed Matter Physics",
+    "Nanomaterials",
+    "Quantum Devices",
+    "Nuclear Physics",
+    "Optics & Photonics",
+    "Fibre Optics",
+    "Emerging Technologies",
   ],
 
+  // Exactly as present on the official Google Site without extra fabricated text
   speakers: [
     {
       name: "Prof. Prasanta K. Panigrahi",
       institution: "Siksha 'O' Anusandhan (SoA) University",
-      designation: "Founding Director, Center for Quantum Science and Technology (CQST)",
-      topic: "Quantum Information & Optics",
       image: "/images/speaker-panigrahi.jpg",
     },
     {
       name: "Dr. Tanmoy Sarkar",
       institution: "National Center for Nuclear Research, Poland",
-      designation: "Assistant Professor",
-      topic: "High Energy & Nuclear Physics",
       image: "/images/speaker-tanmoy.jpg",
     },
     {
       name: "Prof. Utpal Roy",
-      institution: "Indian Institute of Technology (IIT), Patna",
-      designation: "Professor, Department of Physics",
-      topic: "Ultracold Atoms & Non-linear Optics",
+      institution: "IIT, Patna",
       image: "/images/speaker-utpal.jpg",
     },
     {
       name: "Prof. Ardhendu Shekhar Patra",
-      institution: "Sidho-Kanho-Birsha University (SKBU)",
-      designation: "Professor",
-      topic: "Condensed Matter Physics",
+      institution: "Sidho Kanho Birsha University",
       image: "/images/speaker-ardhendu.jpg",
     },
     {
       name: "Prof. Ayan Khan",
       institution: "Bennett University",
-      designation: "Professor",
-      topic: "Quantum Simulation & Devices",
       image: "/images/speaker-ayan.jpg",
     },
     {
       name: "Dr. Raka Dasgupta",
       institution: "Calcutta University",
-      designation: "Associate Professor",
-      topic: "Quantum Many-Body Physics",
       image: "/images/speaker-raka.jpg",
     },
     {
       name: "Dr. Biswajit Sen",
       institution: "VTT College",
-      designation: "Assistant Professor",
-      topic: "Optics & Information Dynamics",
       image: "/images/speaker-biswajit.jpg",
     },
     {
       name: "Dr. Nasir Alam",
       institution: "Bankura University",
-      designation: "Assistant Professor",
-      topic: "Nanomaterials & Emerging Tech",
       image: "/images/speaker-nasir.jpg",
     },
     {
       name: "Dr. Baibaswata Bhattacharjee",
       institution: "Ramananda College",
-      designation: "Associate Professor",
-      topic: "Photonics & Material Science",
       image: "/images/speaker-baibaswata.jpg",
     },
   ] as Speaker[],
 
   people: {
+    // Exactly 3 core leaders: Patron, Chairperson, Convenor (Treasurer removed as requested)
     core: [
       {
         name: "Dr. Narugopal Mukherjee",
         designation: "Patron",
         role: "Principal, Bankura Sammilani College",
         image: "/images/patron-narugopal.jpg",
-        department: "Administration",
       },
       {
         name: "Dr. Arunava Chattopadhyay",
         designation: "Chairperson",
-        role: "Coordinator, IQAC, Bankura Sammilani College",
+        role: "Coordinator, IQAC Bankura Sammilani College",
         image: "/images/chairperson-arunava.jpg",
-        department: "IQAC & Department of Chemistry",
       },
       {
         name: "Dr. Priyam Das",
         designation: "Convenor",
-        role: "Assistant Professor, Department of Physics, Bankura Sammilani College",
+        role: "Assistant Professor, Department of Physics Bankura Sammilani College",
         image: "/images/convenor-priyam.jpg",
-        department: "Department of Physics",
-      },
-      {
-        name: "Dr. Pradipta Chakraborty",
-        designation: "Treasurer",
-        role: "State Aided College Teacher (SACT), Department of Physics",
-        department: "Department of Physics",
       },
     ] as LeadershipPerson[],
 
@@ -302,11 +231,11 @@ export const site = {
       },
       {
         name: "Prof. Krishnendu Sengupta",
-        role: "Professor, Indian Association for the Cultivation of Science (IACS), West Bengal, India",
+        role: "Professor, Indian Association for the Cultivation of Science, West Bengal, India",
       },
       {
         name: "Prof. Anirban Pathak",
-        role: "Professor, Jaypee Institute of Information Technology (JIIT), Uttar Pradesh, India",
+        role: "Professor, Jaypee Institute of Information Technology, Uttar Pradesh, India",
       },
       {
         name: "Prof. Utpal Roy",
@@ -314,7 +243,7 @@ export const site = {
       },
       {
         name: "Prof. Ardhendu Shekhar Patra",
-        role: "Professor, Sidho-Kanho-Birsha University (SKBU), West Bengal, India",
+        role: "Professor, Sidhu-Kanho Birsha University, West Bengal, India",
       },
       {
         name: "Prof. Ayan Khan",
@@ -329,46 +258,53 @@ export const site = {
     organizing: [
       {
         name: "Dr. Chakradhar Rajowar",
-        role: "Head & Associate Professor, Department of Physics",
+        role: "Head & Associate Professor",
       },
       {
         name: "Dr. Uttam Mondal",
-        role: "Associate Professor, Department of Physics",
+        role: "Associate Professor",
       },
       {
         name: "Dr. Pradipta Chakraborty",
-        role: "State Aided College Teacher (SACT), Department of Physics",
+        role: "State Aided College Teacher",
       },
       {
         name: "Dr. Surajit Bosu",
-        role: "State Aided College Teacher (SACT), Department of Physics",
+        role: "State Aided College Teacher",
       },
       {
-        name: "Mr. Narenranath Pal",
-        role: "State Aided College Teacher (SACT), Department of Physics",
+        name: "Mr. Narendranath Pal",
+        role: "State Aided College Teacher",
       },
       {
         name: "Dr. Swapnadip Roy",
-        role: "Member, IQAC, Bankura Sammilani College",
+        role: "Member, IQAC",
       },
     ] as CommitteeMember[],
+
+    volunteers: [
+      { name: "Mrinmoy Pal", role: "Student Volunteer / Web Lead" },
+      { name: "Saswata Chakraborty", role: "Student Volunteer" },
+      { name: "Arin Ghoshal", role: "Student Volunteer" },
+      { name: "Pramit Mukhuti", role: "Student Volunteer" },
+    ] as Volunteer[],
   },
 
   schedule: {
     day1: {
-      date: "08 October 2026 (Thursday)",
-      title: "Inauguration, Keynote Lectures & Technical Sessions",
+      date: "October 08, 2026",
+      title: "Day 1: Inauguration & Sessions",
       items: [
         {
           time: "08:30 AM – 09:30 AM",
           title: "Registration & Welcome Kit Distribution",
-          details: "Delegate reporting, badge verification, kit collection, and welcome breakfast at the Physics Foyer.",
+          details: "Participant check-in and documentation at the venue desk.",
           badge: "Check-in",
         },
         {
           time: "09:30 AM – 10:30 AM",
-          title: "Inaugural Ceremony & Lamp Lighting",
-          details: "Ceremonial lamp lighting, Welcome address by Principal Dr. Narugopal Mukherjee, IQAC address by Dr. Arunava Chattopadhyay, and conference orientation by Convenor Dr. Priyam Das.",
+          title: "Inaugural Ceremony",
+          details: "Lamp lighting, welcome address by Principal Dr. Narugopal Mukherjee and Dignitaries.",
           badge: "Inaugural",
         },
         {
@@ -379,57 +315,57 @@ export const site = {
         },
         {
           time: "11:00 AM – 12:30 PM",
-          title: "Keynote Session I: Quantum Foundations & Optics",
-          details: "Plenary lectures on quantum information, quantum cryptography, and non-classical light states by invited experts.",
+          title: "Keynote Session I",
+          details: "Invited talks by eminent resource persons on Quantum Information and Optics.",
           badge: "Keynote",
         },
         {
           time: "12:30 PM – 01:30 PM",
-          title: "Technical Session I: Oral Paper Presentations",
-          details: "Contributed research paper presentations by registered PhD scholars and early-career researchers.",
-          badge: "Oral",
+          title: "Technical Session I & Oral Presentations",
+          details: "Research paper presentations by scholars and interactive discussions.",
+          badge: "Oral Presentations",
         },
         {
           time: "01:30 PM – 02:30 PM",
-          title: "Conference Lunch & Exhibition",
-          details: "Buffet lunch for all registered delegates and poster display preview.",
+          title: "Conference Lunch & Poster Preview",
+          details: "Buffet lunch for all registered participants.",
           badge: "Lunch",
         },
         {
           time: "02:30 PM – 04:00 PM",
-          title: "Poster Presentation Session & Evaluation",
-          details: "Interactive poster presentations judged by an eminent scientific jury. Best Poster Awards evaluated.",
+          title: "Poster Presentation Session",
+          details: "Interactive poster presentations judged by expert jury panel.",
           badge: "Posters",
         },
         {
           time: "04:00 PM – 05:00 PM",
-          title: "Panel Discussion: Opportunities in India’s National Quantum Mission",
-          details: "Interactive open forum for students and scholars on careers, funding, and higher research in quantum tech.",
-          badge: "Panel",
+          title: "Interactive Open Forum",
+          details: "Discussion on emerging opportunities under India's National Quantum Mission.",
+          badge: "Discussion",
         },
       ],
     },
     day2: {
-      date: "09 October 2026 (Friday)",
-      title: "Advanced Frontiers, Emerging Tech & Valedictory",
+      date: "October 09, 2026",
+      title: "Day 2: Advanced Talks & Valedictory",
       items: [
         {
           time: "09:30 AM – 11:00 AM",
-          title: "Keynote Session II: Ultracold Atoms & Condensed Matter",
-          details: "Lectures on Bose-Einstein Condensation, degenerate quantum gases, topological materials, and quantum devices.",
+          title: "Keynote Session II",
+          details: "Advanced lectures on Ultracold Atomic Gases and Emerging Technologies.",
           badge: "Keynote",
         },
         {
           time: "11:00 AM – 11:30 AM",
-          title: "Tea & Discussion Break",
-          details: "Morning refreshments in the conference lawn.",
+          title: "Tea Break & Discussion",
+          details: "Morning refreshments and technical consultations.",
           badge: "Break",
         },
         {
           time: "11:30 AM – 01:00 PM",
-          title: "Technical Session II: Nanomaterials, Photonics & Nuclear Physics",
-          details: "Contributed research talks spanning nano-scale devices, optical fibers, and nuclear physics.",
-          badge: "Oral",
+          title: "Technical Session II",
+          details: "Specialized sessions on Condensed Matter Physics and Nanomaterials.",
+          badge: "Technical",
         },
         {
           time: "01:00 PM – 02:00 PM",
@@ -439,14 +375,14 @@ export const site = {
         },
         {
           time: "02:00 PM – 03:30 PM",
-          title: "Young Scientist Forum & Rapid Presentations",
-          details: "Short oral presentations highlighting innovative student ideas and interdisciplinary research.",
-          badge: "Forum",
+          title: "Young Researchers Session",
+          details: "Short oral presentations highlighting innovative student research.",
+          badge: "Presentations",
         },
         {
           time: "03:30 PM – 05:00 PM",
-          title: "Valedictory Ceremony, Awards & Certificate Distribution",
-          details: "Announcement of Best Oral and Poster Presentation Awards, feedback from delegates, certificate handover, and concluding remarks by the Organizing Committee.",
+          title: "Valedictory & Certificate Distribution",
+          details: "Feedback session, distribution of certificates to participants, and concluding remarks.",
           badge: "Valedictory",
         },
       ],
@@ -455,48 +391,48 @@ export const site = {
 
   travel: [
     {
-      mode: "By Air",
+      mode: "By Plane",
       icon: "Plane",
-      title: "Kazi Nazrul Islam Airport (RDP), Durgapur",
-      description: "Closest airport to Bankura (~70 km). Recommended airport for national & international delegates. Dedicated conference pick-up shuttles will be scheduled directly from Durgapur Airport upon advance intimation.",
-      tag: "Conference Pick-up Arranged",
+      title: "Durgapur Airport (Kazi Nazrul Islam Airport, RDP)",
+      description: "Durgapur Airport (RDP) is the closest airport to Bankura. Dedicated conference pick-ups will be arranged directly from there upon prior intimation.",
+      tag: "Conference Pick-ups Arranged",
     },
     {
       mode: "By Train",
       icon: "Train",
       title: "Bankura Railway Station (BQA)",
-      description: "Direct, frequent trains from Howrah & Kolkata (e.g. Rupashi Bangla Express, Aranyak Express, Howrah-Purulia Express, taking 4 to 4.5 hours). The college campus is only ~3 km from Bankura station (e-rickshaws and cabs available round-the-clock). Durgapur Junction (DGR) is 50 km away.",
-      tag: "3 km from Venue",
+      description: "Well-connected to Kolkata/Howrah (approx. 200–210 km, taking 4-5 hours). The college is only 3 km away from Bankura station. Durgapur (DGR) is also 50 km away.",
+      tag: "3 km from College",
     },
     {
-      mode: "By Road / Bus",
+      mode: "By Bus",
       icon: "Bus",
-      title: "State & Highway Network",
-      description: "Frequent deluxe AC and Non-AC express buses run from Kolkata (Esplanade and Karunamoyee terminus) to Bankura via Durgapur Expressway (approx. 200–220 km, 4.5 to 5.5 hours drive).",
+      title: "Express Buses from Kolkata",
+      description: "AC and Non-AC buses run frequently from Kolkata (Esplanade/Karunamoyee) to Bankura via Durgapur. The journey covers around 200-220 km and takes roughly 5-6 hours.",
       tag: "Frequent Services",
     },
   ],
 
   faqs: [
     {
-      q: "Who is eligible to participate in Quantum Spike 2026?",
-      a: "Undergraduate (UG) and Postgraduate (PG) students, PhD scholars, postdoctoral researchers, faculty members, and industry scientists working in Physics, Chemistry, Material Science, Electronics, and allied engineering disciplines are cordially invited.",
+      q: "Who can attend Quantum Spike 2026?",
+      a: "Students (UG/PG), PhD/research scholars, faculty members, early-career researchers, and scientists interested in contemporary physics and emerging technologies are welcome.",
     },
     {
-      q: "How do I register and pay the registration fee?",
-      a: "1) Pay the applicable registration fee via UPI QR code or direct Indian Bank transfer. 2) Save the transaction reference number / screenshot. 3) Fill out the official Google Form with your details and upload the payment proof. You will receive an email confirmation once verified.",
+      q: "What are the registration dates?",
+      a: "Registration opens on 10th September, 2026 and closes on 05th October, 2026.",
     },
     {
-      q: "Can I submit an abstract for oral or poster presentation?",
-      a: "Yes! Scholars and faculty wishing to present can submit an abstract (up to 300 words with 1 figure/table) aligned with any of our 10 conference themes. You can specify whether you prefer an Oral Presentation or Poster Presentation in the registration form.",
+      q: "Where is the conference held?",
+      a: "The event will be hosted by the Department of Physics, Bankura Sammilani College, Kenduadihi, Bankura, West Bengal - 722102.",
     },
     {
-      q: "Are accommodation and local travel assistance available?",
-      a: "Limited accommodation assistance is available in guest houses and nearby partner hotels on a paid, first-come first-served basis. Dedicated pickup shuttles will be coordinated from Durgapur Airport (RDP) and Bankura Railway Station (BQA). Please mention your travel details in advance.",
+      q: "How do I complete the registration after payment?",
+      a: "After paying the registration fee via UPI QR Code or Bank Transfer, save the Transaction ID / receipt screenshot, and submit it on the official Google Form (forms.gle/zaWp8YDKWejV6tVi9).",
     },
     {
-      q: "Will certificates and kits be provided to all attendees?",
-      a: "Yes, all registered delegates will receive a formal delegate kit, abstract proceedings booklet, food passes for both days, and a signed Certificate of Participation or Presentation (as applicable).",
+      q: "Will certificates and kits be provided?",
+      a: "Yes, all registered delegates will receive an official delegate kit, abstract proceedings volume, and signed certificates.",
     },
   ],
 } as const;

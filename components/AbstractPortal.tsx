@@ -21,7 +21,7 @@ export default function AbstractPortal() {
     phone: "",
     institution: "",
     category: "PhD / Research Scholar",
-    theme: site.topics[0].title,
+    theme: site.topics[0],
     presentationType: "Oral Presentation",
     title: "",
     abstractText: "",
@@ -297,7 +297,7 @@ Submission Checklist:
                         phone: "",
                         institution: "",
                         category: "PhD / Research Scholar",
-                        theme: site.topics[0].title,
+                        theme: site.topics[0],
                         presentationType: "Oral Presentation",
                         title: "",
                         abstractText: "",
@@ -410,8 +410,8 @@ Submission Checklist:
                     <label htmlFor="theme">Conference Research Theme</label>
                     <select id="theme" name="theme" value={formData.theme} onChange={handleChange}>
                       {site.topics.map((t) => (
-                        <option key={t.title} value={t.title}>
-                          {t.title}
+                        <option key={t} value={t}>
+                          {t}
                         </option>
                       ))}
                     </select>

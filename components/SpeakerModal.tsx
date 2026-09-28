@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { X, Building2, BookOpen, Award, CheckCircle } from "lucide-react";
+import { X, Building2, Award } from "lucide-react";
 import { Speaker } from "@/lib/site";
 
 interface SpeakerModalProps {
@@ -43,43 +43,22 @@ export default function SpeakerModal({ speaker, onClose }: SpeakerModalProps) {
           <div className="speaker-modal-meta">
             <span className="speaker-modal-badge">
               <Award size={13} className="inline mr-1" />
-              EMINENT RESOURCE PERSON
+              INVITED RESOURCE PERSON
             </span>
             <h3>{speaker.name}</h3>
             <p className="speaker-modal-inst">
               <Building2 size={15} className="inline mr-1.5" />
               {speaker.institution}
             </p>
-            {speaker.designation && (
-              <p className="speaker-modal-desig">{speaker.designation}</p>
-            )}
           </div>
         </div>
 
         <div className="speaker-modal-body">
           <div className="speaker-info-block">
-            <h4>
-              <BookOpen size={16} />
-              Session & Research Focus
-            </h4>
-            <div className="topic-pill-large">
-              {speaker.topic || "Contemporary Physics & Emerging Technologies"}
-            </div>
             <p className="speaker-info-text">
-              Delivering an invited keynote lecture exploring key theoretical foundations, experimental
-              methodologies, and collaborative opportunities under India’s National Quantum Mission.
+              Invited speaker at <strong>Quantum Spike – 2026</strong>: International Conference on Contemporary Physics,
+              Optics and Emerging Technologies, Department of Physics, Bankura Sammilani College.
             </p>
-          </div>
-
-          <div className="speaker-highlights">
-            <div className="highlight-item">
-              <CheckCircle size={15} />
-              <span>Plenary & Technical Session Speaker</span>
-            </div>
-            <div className="highlight-item">
-              <CheckCircle size={15} />
-              <span>Interactive Q&A with Students & Scholars</span>
-            </div>
           </div>
         </div>
 

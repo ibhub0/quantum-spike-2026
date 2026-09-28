@@ -40,11 +40,11 @@ import AbstractPortal from "@/components/AbstractPortal";
 
 const navItems = [
   ["About", "about"],
-  ["Brochure", "brochure"],
   ["Themes", "themes"],
   ["Speakers", "speakers"],
   ["Schedule", "schedule"],
   ["Committees", "committees"],
+  ["Volunteers", "volunteers"],
   ["Registration", "registration"],
   ["Submissions", "portal"],
   ["Venue", "venue"],
@@ -56,7 +56,7 @@ export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [brochureOpen, setBrochureOpen] = useState(false);
   const [selectedSpeaker, setSelectedSpeaker] = useState<Speaker | null>(null);
-  const [activeCommitteeTab, setActiveCommitteeTab] = useState<"core" | "advisory" | "organizing">("core");
+  const [activeCommitteeTab, setActiveCommitteeTab] = useState<"core" | "advisory" | "organizing" | "volunteers">("core");
   const [activeDay, setActiveDay] = useState<"day1" | "day2">("day1");
   const [activeFaq, setActiveFaq] = useState<number | null>(0);
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
@@ -161,6 +161,36 @@ export default function Home() {
 
         <div className="container hero-layout">
           <div className="hero-content">
+            <div className="hero-sponsor-header">
+              <div className="sponsor-brand">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={site.institution.logo}
+                  alt="Bankura Sammilani College Emblem"
+                  className="college-emblem-img"
+                />
+                <div className="sponsor-brand-text">
+                  <span className="sponsor-name">{site.institution.college}</span>
+                  <span className="sponsor-sub">{site.institution.accreditation}</span>
+                </div>
+              </div>
+
+              <div className="sponsor-divider" />
+
+              <div className="sponsor-brand">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={site.funding.logo}
+                  alt="ANRF SERB DST Emblem"
+                  className="anrf-emblem-img"
+                />
+                <div className="sponsor-brand-text">
+                  <span className="sponsor-name">{site.funding.agency}</span>
+                  <span className="sponsor-sub">Department of Science &amp; Technology, GoI</span>
+                </div>
+              </div>
+            </div>
+
             <div className="grant-kicker">
               <span className="grant-dot" />
               <span>ANRF (SERB-DST) • CORE RESEARCH GRANT FUNDED</span>
@@ -407,75 +437,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ================= OFFICIAL CONFERENCE BROCHURE SPOTLIGHT ================= */}
-      <section className="section brochure-showcase-section" id="brochure" style={{ padding: "40px 0 80px" }}>
-        <div className="container">
-          <div className="brochure-spotlight-card">
-            <div
-              className="brochure-preview-wrapper"
-              onClick={() => setBrochureOpen(true)}
-              role="button"
-              tabIndex={0}
-              title="Click to view full brochure"
-            >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={site.links.brochurePoster}
-                alt="Quantum Spike 2026 Official Brochure Poster"
-              />
-              <div className="brochure-zoom-badge">
-                <Download size={18} />
-                <span>Click to Expand / Fullscreen</span>
-              </div>
-            </div>
-
-            <div className="brochure-spotlight-content">
-              <span className="eyebrow">Official Circular &amp; Announcement</span>
-              <h3>Conference Brochure &amp; Circular</h3>
-              <p>
-                The official circular for <strong>Quantum Spike 2026</strong> details the conference theme,
-                honorable patron, chairperson, convenor, organizing committee members, invited resource persons,
-                and registration instructions.
-              </p>
-
-              <div className="theme-quote-badge" style={{ marginBottom: "22px" }}>
-                <Sparkles size={16} />
-                <span>&ldquo;{site.themeQuote}&rdquo;</span>
-              </div>
-
-              <div className="brochure-spotlight-actions">
-                <button
-                  onClick={() => setBrochureOpen(true)}
-                  className="btn-primary-glow"
-                >
-                  <Download size={16} />
-                  <span>View Fullscreen Lightbox</span>
-                </button>
-
-                <a
-                  href={site.links.brochurePoster}
-                  download="Quantum-Spike-2026-Brochure.jpg"
-                  className="btn-glass"
-                >
-                  <Download size={16} />
-                  <span>Download Poster (JPG)</span>
-                </a>
-
-                <a
-                  href={site.links.brochureDrive}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn-glass"
-                >
-                  <ExternalLink size={16} />
-                  <span>Google Drive PDF</span>
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* ================= RESEARCH THEMES ================= */}
       <section className="section themes-section" id="themes">
         <div className="container">
@@ -489,12 +450,12 @@ export default function Home() {
           </div>
 
           <div className="themes-grid">
-            {site.topics.map((t, idx) => (
-              <div className="theme-card" key={t.title}>
+            {site.topics.map((topic, idx) => (
+              <div className="theme-card" key={topic}>
                 <span className="theme-number">{String(idx + 1).padStart(2, "0")}</span>
                 <div className="theme-content">
-                  <h3>{t.title}</h3>
-                  <p>{t.desc}</p>
+                  <h3>{topic}</h3>
+                  <p>Frontier academic focus track &amp; presentation theme</p>
                 </div>
               </div>
             ))}
@@ -529,7 +490,6 @@ export default function Home() {
                 </div>
                 <h3>{s.name}</h3>
                 <p className="speaker-institution">{s.institution}</p>
-                <span className="speaker-topic-pill">{s.topic}</span>
               </div>
             ))}
           </div>
@@ -619,6 +579,12 @@ export default function Home() {
             >
               Organizing Committee ({site.people.organizing.length})
             </button>
+            <button
+              className={`comm-tab ${activeCommitteeTab === "volunteers" ? "active" : ""}`}
+              onClick={() => setActiveCommitteeTab("volunteers")}
+            >
+              Student Volunteers ({site.people.volunteers.length})
+            </button>
           </div>
 
           {activeCommitteeTab === "core" && (
@@ -666,6 +632,21 @@ export default function Home() {
                     <h4>{m.name}</h4>
                     <p>{m.role}</p>
                   </div>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {activeCommitteeTab === "volunteers" && (
+            <div className="volunteers-grid" id="volunteers">
+              {site.people.volunteers.map((v) => (
+                <div className="volunteer-card" key={v.name}>
+                  <div className="volunteer-badge-icon">
+                    <Sparkles size={22} />
+                  </div>
+                  <h3>{v.name}</h3>
+                  <p className="volunteer-role">{v.role}</p>
+                  <span className="volunteer-dept">Department of Physics, Bankura Sammilani College</span>
                 </div>
               ))}
             </div>
@@ -884,7 +865,7 @@ export default function Home() {
               {site.travel.map((item) => (
                 <div className="travel-card" key={item.mode}>
                   <div className="travel-icon">
-                    {item.mode === "By Air" ? (
+                    {item.mode === "By Plane" ? (
                       <Plane size={22} />
                     ) : item.mode === "By Train" ? (
                       <Train size={22} />
@@ -1061,10 +1042,17 @@ export default function Home() {
 
           <div className="footer-bottom">
             <span>© 2026 Department of Physics, Bankura Sammilani College. All rights reserved.</span>
+            <span style={{ color: "#00f2fe", fontWeight: 600 }}>✦ {site.creatorCredit}</span>
             <span>ANRF (SERB-DST) Core Research Grant Funded</span>
           </div>
         </div>
       </footer>
+
+      {/* ================= FLOATING WATERMARK ================= */}
+      <div className="floating-watermark" title="Official Platform Development & Maintenance">
+        <span className="watermark-dot" />
+        <span>{site.creatorCredit}</span>
+      </div>
 
       {/* ================= MODALS ================= */}
       <BrochureModal isOpen={brochureOpen} onClose={() => setBrochureOpen(false)} />

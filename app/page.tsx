@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   ArrowRight,
   CalendarDays,
@@ -29,6 +29,9 @@ import {
   FileText,
   Clock,
   Send,
+  UserCheck,
+  GraduationCap,
+  Briefcase,
 } from "lucide-react";
 
 import { site, Speaker } from "@/lib/site";
@@ -39,7 +42,7 @@ import SpeakerModal from "@/components/SpeakerModal";
 import AbstractPortal from "@/components/AbstractPortal";
 
 interface NavSubItem {
-  label: string;
+  label?: string;
   href?: string;
   desc?: string;
   badge?: string;
@@ -51,6 +54,7 @@ interface NavCategory {
   title: string;
   href?: string;
   items?: NavSubItem[];
+  isMegaCommittees?: boolean;
 }
 
 const navCategories: NavCategory[] = [
@@ -68,11 +72,12 @@ const navCategories: NavCategory[] = [
   },
   {
     title: "Committees",
+    isMegaCommittees: true,
     items: [
       { label: "Core Leadership", href: "#committees", tab: "core", desc: "Patron, Chairperson & Convenor" },
       { label: "Advisory Committee", href: "#committees", tab: "advisory", desc: "Distinguished national physicists" },
       { label: "Organizing Committee", href: "#committees", tab: "organizing", desc: "Department of Physics faculty" },
-      { label: "Student Volunteers", href: "#committees", tab: "volunteers", desc: "Dedicated student organizing team", badge: "Volunteers" },
+      { label: "Student Volunteers", href: "#committees", tab: "volunteers", desc: "Dedicated student organizing team", badge: "Student Team" },
     ],
   },
   {
@@ -104,6 +109,44 @@ export default function Home() {
   const [activeDay, setActiveDay] = useState<"day1" | "day2">("day1");
   const [activeFaq, setActiveFaq] = useState<number | null>(0);
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
+
+  // Close timer ref for bulletproof hover without flickering/closing on cursor movement
+  const closeTimerRef = useRef<NodeJS.Timeout | null>(null);
+
+  const handleMouseEnter = (title: string) => {
+    if (closeTimerRef.current) {
+      clearTimeout(closeTimerRef.current);
+      closeTimerRef.current = null;
+    }
+    setOpenDropdown(title);
+  };
+
+  const handleMouseLeave = () => {
+    if (closeTimerRef.current) clearTimeout(closeTimerRef.current);
+    closeTimerRef.current = setTimeout(() => {
+      setOpenDropdown(null);
+    }, 240); // 240ms grace period so moving cursor across gap never closes dropdown
+  };
+
+  const handleTriggerClick = (title: string) => {
+    if (closeTimerRef.current) clearTimeout(closeTimerRef.current);
+    setOpenDropdown((prev) => (prev === title ? null : title));
+  };
+
+  // Close dropdown on outside click
+  useEffect(() => {
+    const handleDocumentClick = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      if (!target.closest(".nav-wrap")) {
+        setOpenDropdown(null);
+      }
+    };
+    document.addEventListener("click", handleDocumentClick);
+    return () => {
+      document.removeEventListener("click", handleDocumentClick);
+      if (closeTimerRef.current) clearTimeout(closeTimerRef.current);
+    };
+  }, []);
 
   const handleCopy = (text: string, key: string) => {
     navigator.clipboard.writeText(text);
@@ -193,20 +236,163 @@ export default function Home() {
                 <div
                   className="nav-dropdown-wrapper"
                   key={cat.title}
-                  onMouseLeave={() => setOpenDropdown(null)}
+                  onMouseEnter={() => handleMouseEnter(cat.title)}
+                  onMouseLeave={handleMouseLeave}
                 >
                   <button
                     className={`nav-link dropdown-trigger ${isOpen ? "is-active" : ""}`}
-                    onClick={() => setOpenDropdown(isOpen ? null : cat.title)}
-                    onMouseEnter={() => setOpenDropdown(cat.title)}
+                    onClick={() => handleTriggerClick(cat.title)}
                     aria-expanded={isOpen}
                   >
                     <span>{cat.title}</span>
                     <ChevronDown size={14} className={`dropdown-icon ${isOpen ? "rotate" : ""}`} />
                   </button>
 
-                  {isOpen && (
-                    <div className="nav-dropdown-menu">
+                  {/* Committees Mega Menu (3 Side-by-Side Columns: Core Left | Advisory & Organizing Middle | Volunteers Right) */}
+                  {cat.isMegaCommittees && isOpen && (
+                    <div
+                      className="nav-dropdown-menu mega-menu-committees"
+                      onMouseEnter={() => handleMouseEnter(cat.title)}
+                      onMouseLeave={handleMouseLeave}
+                    >
+                      <div className="mega-menu-header">
+                        <div className="mega-header-title">
+                          <Users size={16} className="text-cyan-400" />
+                          <span>CONFERENCE COMMITTEES &amp; LEADERSHIP</span>
+                        </div>
+                        <span className="mega-header-sub">Department of Physics • Bankura Sammilani College</span>
+                      </div>
+
+                      <div className="mega-menu-grid">
+                        {/* Column 1: Core Leadership (Left) */}
+                        <div className="mega-col mega-col-left">
+                          <div className="mega-col-heading">
+                            <span className="col-badge badge-cyan">CORE LEADERSHIP</span>
+                            <h4>Patron, Chair &amp; Convenor</h4>
+                          </div>
+
+                          <div className="mega-core-list">
+                            {site.people.core.map((p) => (
+                              <div
+                                key={p.name}
+                                className="mega-leader-item"
+                                onClick={() => handleNavClick({ href: "#committees", tab: "core" })}
+                                role="button"
+                                tabIndex={0}
+                              >
+                                <span className="leader-role-tag">{p.designation}</span>
+                                <strong>{p.name}</strong>
+                                <span className="leader-desc">{p.role}</span>
+                              </div>
+                            ))}
+                          </div>
+
+                          <a
+                            href="#committees"
+                            className="mega-view-btn"
+                            onClick={() => handleNavClick({ href: "#committees", tab: "core" })}
+                          >
+                            <span>Explore Core Leadership</span>
+                            <ArrowRight size={13} />
+                          </a>
+                        </div>
+
+                        {/* Column 2: Advisory (Top) & Organizing (Bottom) (Middle) */}
+                        <div className="mega-col mega-col-mid">
+                          {/* Top: Advisory Committee */}
+                          <div className="mega-subgroup">
+                            <div className="mega-col-heading">
+                              <span className="col-badge badge-blue">ADVISORY BOARD</span>
+                              <h4>Advisory Committee ({site.people.advisory.length})</h4>
+                            </div>
+                            <p className="mega-desc-text">
+                              Distinguished physicists and academicians guiding the conference:
+                            </p>
+                            <div className="mega-names-snippet">
+                              <span>Prof. Prasanta K. Panigrahi (SOA)</span>
+                              <span>Prof. Krishnendu Sengupta (IACS)</span>
+                              <span>Prof. Utpal Roy (IIT Patna) &amp; more</span>
+                            </div>
+                            <a
+                              href="#committees"
+                              className="mega-inline-link"
+                              onClick={() => handleNavClick({ href: "#committees", tab: "advisory" })}
+                            >
+                              <span>View All 7 Advisory Members →</span>
+                            </a>
+                          </div>
+
+                          <div className="mega-inner-divider" />
+
+                          {/* Bottom: Organizing Committee */}
+                          <div className="mega-subgroup">
+                            <div className="mega-col-heading">
+                              <span className="col-badge badge-purple">FACULTY TEAM</span>
+                              <h4>Organizing Committee ({site.people.organizing.length})</h4>
+                            </div>
+                            <p className="mega-desc-text">
+                              Faculty members, Department of Physics &amp; IQAC:
+                            </p>
+                            <div className="mega-names-snippet">
+                              <span>Dr. Chakradhar Rajowar (HOD)</span>
+                              <span>Dr. Uttam Mondal (Associate Prof)</span>
+                              <span>Dr. Pradipta Chakraborty &amp; faculty</span>
+                            </div>
+                            <a
+                              href="#committees"
+                              className="mega-inline-link"
+                              onClick={() => handleNavClick({ href: "#committees", tab: "organizing" })}
+                            >
+                              <span>View All 6 Faculty Organizers →</span>
+                            </a>
+                          </div>
+                        </div>
+
+                        {/* Column 3: Student Volunteers (Right) */}
+                        <div className="mega-col mega-col-right">
+                          <div className="mega-col-heading">
+                            <span className="col-badge badge-green">STUDENT TEAM</span>
+                            <h4>Student Volunteers ({site.people.volunteers.length})</h4>
+                          </div>
+
+                          <div className="mega-volunteers-list">
+                            {site.people.volunteers.map((v) => (
+                              <div
+                                key={v.name}
+                                className="mega-volunteer-item"
+                                onClick={() => handleNavClick({ href: "#committees", tab: "volunteers" })}
+                                role="button"
+                                tabIndex={0}
+                              >
+                                <div className="volunteer-row-top">
+                                  <strong>{v.name}</strong>
+                                  <span className="v-pill">BSC Phys</span>
+                                </div>
+                                <span className="v-role">{v.role}</span>
+                              </div>
+                            ))}
+                          </div>
+
+                          <a
+                            href="#committees"
+                            className="mega-view-btn"
+                            onClick={() => handleNavClick({ href: "#committees", tab: "volunteers" })}
+                          >
+                            <span>View Volunteers Profile</span>
+                            <ArrowRight size={13} />
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Standard Dropdown for other menus (Programme, Registration, Information) */}
+                  {!cat.isMegaCommittees && isOpen && (
+                    <div
+                      className="nav-dropdown-menu"
+                      onMouseEnter={() => handleMouseEnter(cat.title)}
+                      onMouseLeave={handleMouseLeave}
+                    >
                       <div className="nav-dropdown-header">
                         <span>{cat.title}</span>
                       </div>

@@ -155,153 +155,168 @@ export default function Home() {
       {/* ================= HERO SECTION ================= */}
       <section className="hero" id="top">
         <QuantumCanvas />
-        <div className="hero-glow-1" />
-        <div className="hero-glow-2" />
-        <div className="hero-grid-pattern" />
+        <div className="hero-radial-bg" />
 
-        <div className="container hero-layout">
-          <div className="hero-content">
-            <div className="hero-sponsor-header">
-              <div className="sponsor-brand">
+        <div className="container hero-container">
+          {/* Institutional Accreditation & Grant Banner */}
+          <div className="hero-institutional-bar">
+            <div className="inst-badge inst-left">
+              <div className="inst-logo-frame">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={site.institution.logo}
                   alt="Bankura Sammilani College Emblem"
-                  className="college-emblem-img"
+                  className="inst-emblem-img"
                 />
-                <div className="sponsor-brand-text">
-                  <span className="sponsor-name">{site.institution.college}</span>
-                  <span className="sponsor-sub">{site.institution.accreditation}</span>
-                </div>
               </div>
+              <div className="inst-text">
+                <span className="inst-title">{site.institution.college}</span>
+                <span className="inst-sub">
+                  Est. 1948 • {site.institution.accreditation} • Affiliated to Bankura University
+                </span>
+              </div>
+            </div>
 
-              <div className="sponsor-divider" />
+            <div className="inst-divider" />
 
-              <div className="sponsor-brand">
+            <div className="inst-badge inst-right">
+              <div className="inst-logo-frame">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={site.funding.logo}
                   alt="ANRF SERB DST Emblem"
                   className="anrf-emblem-img"
                 />
-                <div className="sponsor-brand-text">
-                  <span className="sponsor-name">{site.funding.agency}</span>
-                  <span className="sponsor-sub">Department of Science &amp; Technology, GoI</span>
-                </div>
               </div>
-            </div>
-
-            <div className="grant-kicker">
-              <span className="grant-dot" />
-              <span>ANRF (SERB-DST) • CORE RESEARCH GRANT FUNDED</span>
-            </div>
-
-            <h1>
-              QUANTUM <span className="quantum-gradient">SPIKE</span>
-              <sup>2026</sup>
-            </h1>
-
-            <p className="hero-subtitle">
-              {site.subtitle}
-            </p>
-
-            <div className="theme-quote-badge">
-              <Sparkles size={15} />
-              <span>&ldquo;{site.themeQuote}&rdquo;</span>
-            </div>
-
-            <div className="motto-strip">
-              <span>⚡ {site.motto}</span>
-              <span>•</span>
-              <span>🌐 {site.pillars}</span>
-            </div>
-
-            <p className="hero-host">
-              Organized by <strong>{site.institution.department}</strong>, in collaboration with{" "}
-              <strong>{site.institution.iqac}</strong>, {site.institution.college} (
-              {site.institution.accreditation}).
-            </p>
-
-            <div className="hero-actions">
-              <a
-                href={site.links.registrationForm}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-primary-glow"
-              >
-                <span>Register for Conference</span>
-                <ArrowRight size={17} />
-              </a>
-
-              <button
-                onClick={() => setBrochureOpen(true)}
-                className="btn-glass"
-              >
-                <Download size={17} />
-                <span>View Official Brochure</span>
-              </button>
-
-              <a href="#portal" className="btn-glass">
-                <FileText size={17} />
-                <span>Call for Abstracts</span>
-              </a>
-            </div>
-
-            <div className="hero-meta-strip">
-              <div className="meta-item">
-                <CalendarDays size={16} />
-                <span>{site.dates}</span>
-              </div>
-              <div className="meta-item">
-                <MapPin size={16} />
-                <span>{site.institution.college}, West Bengal</span>
-              </div>
-              <div className="meta-item">
-                <Mail size={16} />
-                <a href={`mailto:${site.email}`}>{site.email}</a>
+              <div className="inst-text">
+                <span className="inst-title">{site.funding.agency}</span>
+                <span className="inst-sub">
+                  (SERB-DST) Core Research Grant Project • Govt. of India
+                </span>
               </div>
             </div>
           </div>
 
-          {/* Right Visual: Atom Logo Display & Countdown */}
-          <div className="hero-visual">
-            <div className="hero-logo-display">
-              <div className="hero-logo-frame">
-                <div className="hero-atom-ring ring-1" />
-                <div className="hero-atom-ring ring-2" />
-                <div className="hero-atom-ring ring-3" />
-                <div className="hero-logo-core">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={site.logo} alt="Quantum Spike 2026 Official Logo" />
-                </div>
+          <div className="hero-layout">
+            <div className="hero-content">
+              <div className="grant-kicker">
+                <span className="grant-dot" />
+                <span>ANRF (SERB-DST) • CORE RESEARCH GRANT FUNDED</span>
               </div>
-            </div>
 
-            <div className="quantum-core-card">
-              <CountdownTimer />
+              <h1 className="hero-title">
+                QUANTUM <span className="quantum-title-accent">SPIKE</span>
+                <sup className="hero-year">2026</sup>
+              </h1>
 
-              <div className="hero-card-links">
+              <p className="hero-subtitle">
+                {site.subtitle}
+              </p>
+
+              <div className="theme-quote-badge">
+                <Sparkles size={15} />
+                <span>&ldquo;{site.themeQuote}&rdquo;</span>
+              </div>
+
+              <div className="motto-strip">
+                <span>⚡ {site.motto}</span>
+                <span className="motto-sep">•</span>
+                <span>🌐 {site.pillars}</span>
+              </div>
+
+              <p className="hero-host">
+                Organized by <strong>{site.institution.department}</strong>, in collaboration with{" "}
+                <strong>{site.institution.iqac}</strong>, {site.institution.college} (
+                {site.institution.accreditation}).
+              </p>
+
+              <div className="hero-actions">
                 <a
                   href={site.links.registrationForm}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="quick-link-pill"
+                  className="btn-primary-glow"
                 >
-                  <Send size={14} />
-                  <span>Google Form</span>
+                  <span>Register for Conference</span>
+                  <ArrowRight size={17} />
                 </a>
-                <a href="#registration" className="quick-link-pill">
-                  <CreditCard size={14} />
-                  <span>Bank &amp; UPI</span>
+
+                <button
+                  onClick={() => setBrochureOpen(true)}
+                  className="btn-glass"
+                >
+                  <Download size={17} />
+                  <span>Conference Circular</span>
+                </button>
+
+                <a href="#portal" className="btn-glass">
+                  <FileText size={17} />
+                  <span>Call for Abstracts</span>
                 </a>
-                <a href="#schedule" className="quick-link-pill">
-                  <Clock size={14} />
-                  <span>Schedule</span>
-                </a>
-                <a href="#venue" className="quick-link-pill">
-                  <MapPin size={14} />
-                  <span>Directions</span>
-                </a>
+              </div>
+
+              <div className="hero-meta-strip">
+                <div className="meta-item">
+                  <CalendarDays size={16} />
+                  <span>{site.dates}</span>
+                </div>
+                <div className="meta-item">
+                  <MapPin size={16} />
+                  <span>{site.institution.college}, West Bengal</span>
+                </div>
+                <div className="meta-item">
+                  <Mail size={16} />
+                  <a href={`mailto:${site.email}`}>{site.email}</a>
+                </div>
+              </div>
+            </div>
+
+            {/* Right Visual: Official Crest Pedestal & Instrumentation Countdown */}
+            <div className="hero-visual">
+              <div className="hero-emblem-card">
+                <div className="emblem-pedestal">
+                  <div className="emblem-glow-ring" />
+                  <div className="emblem-frame">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={site.logo}
+                      alt="Quantum Spike 2026 Official Logo"
+                      className="emblem-img"
+                    />
+                  </div>
+                </div>
+                <div className="emblem-meta">
+                  <span className="emblem-meta-title">QUANTUM SPIKE 2026</span>
+                  <span className="emblem-meta-sub">Department of Physics • Bankura Sammilani College</span>
+                </div>
+              </div>
+
+              <div className="quantum-core-card">
+                <CountdownTimer />
+
+                <div className="hero-card-links">
+                  <a
+                    href={site.links.registrationForm}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="quick-link-pill"
+                  >
+                    <Send size={14} />
+                    <span>Google Form</span>
+                  </a>
+                  <a href="#registration" className="quick-link-pill">
+                    <CreditCard size={14} />
+                    <span>Bank &amp; UPI</span>
+                  </a>
+                  <a href="#schedule" className="quick-link-pill">
+                    <Clock size={14} />
+                    <span>Schedule</span>
+                  </a>
+                  <a href="#venue" className="quick-link-pill">
+                    <MapPin size={14} />
+                    <span>Directions</span>
+                  </a>
+                </div>
               </div>
             </div>
           </div>

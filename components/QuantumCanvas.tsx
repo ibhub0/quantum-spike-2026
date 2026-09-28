@@ -60,22 +60,22 @@ export default function QuantumCanvas() {
     canvas.addEventListener("mouseleave", handleMouseLeave);
 
     // Particle nodes for quantum entanglement network
-    const particleCount = Math.min(Math.floor((width * height) / 10000), 75);
-    const quantumColors = ["#00f2fe", "#4facfe", "#8a2be2", "#f43f5e", "#10b981", "#fbbf24"];
+    const particleCount = Math.min(Math.floor((width * height) / 12000), 55);
+    const quantumColors = ["#00e5ff", "#38bdf8", "#60a5fa", "#2563eb", "#93c5fd"];
     const particles: Particle[] = [];
 
     for (let i = 0; i < particleCount; i++) {
       particles.push({
         x: Math.random() * width,
         y: Math.random() * height,
-        vx: (Math.random() - 0.5) * 0.6,
-        vy: (Math.random() - 0.5) * 0.6,
-        radius: Math.random() * 2.5 + 1,
+        vx: (Math.random() - 0.5) * 0.45,
+        vy: (Math.random() - 0.5) * 0.45,
+        radius: Math.random() * 2 + 1,
         color: quantumColors[Math.floor(Math.random() * quantumColors.length)],
-        alpha: Math.random() * 0.5 + 0.3,
-        orbitRadius: Math.random() * 80 + 30,
+        alpha: Math.random() * 0.4 + 0.2,
+        orbitRadius: Math.random() * 70 + 25,
         angle: Math.random() * Math.PI * 2,
-        angularSpeed: (Math.random() - 0.5) * 0.02,
+        angularSpeed: (Math.random() - 0.5) * 0.015,
       });
     }
 
@@ -99,25 +99,23 @@ export default function QuantumCanvas() {
       text: txt,
       x: Math.random() * width,
       y: Math.random() * height,
-      vx: (Math.random() - 0.5) * 0.3,
-      vy: (Math.random() - 0.5) * 0.3,
-      alpha: Math.random() * 0.18 + 0.08,
-      size: Math.random() * 4 + 11,
+      vx: (Math.random() - 0.5) * 0.25,
+      vy: (Math.random() - 0.5) * 0.25,
+      alpha: Math.random() * 0.14 + 0.06,
+      size: Math.random() * 3 + 12,
     }));
 
     let time = 0;
 
     const render = () => {
-      time += 0.012;
+      time += 0.01;
       ctx.clearRect(0, 0, width, height);
 
-      // 1. Draw Subtle Multi-Color Quantum Interference Wave Packets (like logo center!)
+      // 1. Draw Subtle Quantum Interference Wave Packets
       const waveColors = [
-        "rgba(0, 242, 254, 0.09)", // Cyan
-        "rgba(138, 43, 226, 0.08)", // Violet
-        "rgba(244, 63, 94, 0.07)",  // Magenta/Rose
-        "rgba(16, 185, 129, 0.07)", // Green
-        "rgba(251, 191, 36, 0.06)", // Amber
+        "rgba(0, 229, 255, 0.06)",
+        "rgba(56, 189, 248, 0.05)",
+        "rgba(37, 99, 235, 0.04)",
       ];
 
       for (let w = 0; w < waveColors.length; w++) {

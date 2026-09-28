@@ -13,173 +13,1062 @@ import {
   Menu,
   Microscope,
   Orbit,
-  Phone,
   Sparkles,
   X,
+  Copy,
+  Building,
+  Plane,
+  Train,
+  Bus,
+  Users,
+  Award,
+  BookOpen,
+  Calendar,
+  CreditCard,
+  QrCode,
+  FileText,
+  Clock,
+  Send,
 } from "lucide-react";
-import { site } from "@/lib/site";
 
-const nav = [
+import { site, Speaker } from "@/lib/site";
+import QuantumCanvas from "@/components/QuantumCanvas";
+import CountdownTimer from "@/components/CountdownTimer";
+import BrochureModal from "@/components/BrochureModal";
+import SpeakerModal from "@/components/SpeakerModal";
+import AbstractPortal from "@/components/AbstractPortal";
+
+const navItems = [
   ["About", "about"],
+  ["Brochure", "brochure"],
   ["Themes", "themes"],
   ["Speakers", "speakers"],
-  ["Programme", "programme"],
-  ["Committee", "committee"],
+  ["Schedule", "schedule"],
+  ["Committees", "committees"],
   ["Registration", "registration"],
+  ["Submissions", "portal"],
+  ["Venue", "venue"],
+  ["FAQ", "faq"],
   ["Contact", "contact"],
 ];
 
-function SectionTitle({ eyebrow, title, text }: { eyebrow: string; title: string; text?: string }) {
-  return (
-    <div className="section-head">
-      <span className="eyebrow">{eyebrow}</span>
-      <h2>{title}</h2>
-      {text && <p>{text}</p>}
-    </div>
-  );
-}
-
 export default function Home() {
-  const [open, setOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [brochureOpen, setBrochureOpen] = useState(false);
+  const [selectedSpeaker, setSelectedSpeaker] = useState<Speaker | null>(null);
+  const [activeCommitteeTab, setActiveCommitteeTab] = useState<"core" | "advisory" | "organizing">("core");
+  const [activeDay, setActiveDay] = useState<"day1" | "day2">("day1");
   const [activeFaq, setActiveFaq] = useState<number | null>(0);
+  const [copiedKey, setCopiedKey] = useState<string | null>(null);
+
+  const handleCopy = (text: string, key: string) => {
+    navigator.clipboard.writeText(text);
+    setCopiedKey(key);
+    setTimeout(() => setCopiedKey(null), 2500);
+  };
 
   return (
     <main>
-      <div className="announcement">
-        <span><Sparkles size={15} /> National Conference • 08–09 October 2026</span>
-        <a href="#registration">Registration opens 10 September <ArrowRight size={14} /></a>
+      {/* ================= TOP ANNOUNCEMENT BAR ================= */}
+      <div className="announcement-bar">
+        <div className="container announcement-content">
+          <div className="announcement-badge">
+            <span className="live-pulse" />
+            <span>ANRF (SERB-DST) CORE RESEARCH GRANT FUNDED • OCTOBER 08–09, 2026</span>
+          </div>
+          <div className="announcement-links">
+            <button onClick={() => setBrochureOpen(true)} className="announcement-link">
+              <Download size={13} />
+              <span>Brochure Poster</span>
+            </button>
+            <a
+              href={site.links.registrationForm}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="announcement-link highlight"
+            >
+              <span>Registration Form (Google Form)</span>
+              <ArrowRight size={13} />
+            </a>
+          </div>
+        </div>
       </div>
 
+      {/* ================= NAVIGATION ================= */}
       <nav className="nav-wrap">
-        <div className="nav-inner">
-          <a className="brand" href="#top" aria-label="Quantum Spike home">
-            <span className="brand-mark"><Orbit size={24} /></span>
-            <span><strong>QUANTUM</strong><em>SPIKE</em><small>2026 · BSC</small></span>
+        <div className="container nav-inner">
+          <a className="brand" href="#top" aria-label="Quantum Spike 2026 Home">
+            <div className="brand-mark">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={site.logo} alt="Quantum Spike 2026 Official Logo" className="brand-logo-img" />
+            </div>
+            <div className="brand-text">
+              <span className="brand-title">
+                QUANTUM <span>SPIKE</span>
+              </span>
+              <span className="brand-sub">2026 • BANKURA SAMMILANI COLLEGE</span>
+            </div>
           </a>
-          <div className={`nav-links ${open ? "is-open" : ""}`}>
-            {nav.map(([label, id]) => <a key={id} href={`#${id}`} onClick={() => setOpen(false)}>{label}</a>)}
-            <a className="nav-cta" href="#registration" onClick={() => setOpen(false)}>Register <ArrowRight size={15} /></a>
+
+          <div className={`nav-links ${menuOpen ? "is-open" : ""}`}>
+            {navItems.map(([label, id]) => (
+              <a
+                key={id}
+                href={`#${id}`}
+                className="nav-link"
+                onClick={() => setMenuOpen(false)}
+              >
+                {label}
+              </a>
+            ))}
           </div>
-          <button className="menu-btn" onClick={() => setOpen(!open)} aria-label="Toggle navigation">
-            {open ? <X /> : <Menu />}
+
+          <div className="nav-actions">
+            <button
+              onClick={() => setBrochureOpen(true)}
+              className="btn-brochure-nav"
+            >
+              <Download size={15} />
+              <span>Brochure</span>
+            </button>
+            <a
+              href={site.links.registrationForm}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-register-nav"
+            >
+              <span>Register</span>
+              <ArrowRight size={14} />
+            </a>
+          </div>
+
+          <button
+            className="menu-toggle"
+            onClick={() => setMenuOpen(!menuOpen)}
+            aria-label="Toggle navigation menu"
+          >
+            {menuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
       </nav>
 
+      {/* ================= HERO SECTION ================= */}
       <section className="hero" id="top">
-        <div className="hero-grid" />
-        <div className="hero-glow hero-glow-a" /><div className="hero-glow hero-glow-b" />
-        <div className="container hero-content">
-          <div className="hero-copy">
-            <div className="kicker"><span /> ANRF (SERB-DST) · CORE RESEARCH GRANT FUNDED</div>
-            <h1>Quantum <span>Spike</span><sup>2026</sup></h1>
-            <p className="hero-sub">National Conference on Contemporary Physics, Optics &amp; Emerging Technologies</p>
-            <p className="hero-intro">A two-day meeting of students, researchers, faculty and scientists exploring the ideas, instruments and technologies shaping the next era of physics.</p>
+        <QuantumCanvas />
+        <div className="hero-glow-1" />
+        <div className="hero-glow-2" />
+        <div className="hero-grid-pattern" />
+
+        <div className="container hero-layout">
+          <div className="hero-content">
+            <div className="grant-kicker">
+              <span className="grant-dot" />
+              <span>ANRF (SERB-DST) • CORE RESEARCH GRANT FUNDED</span>
+            </div>
+
+            <h1>
+              QUANTUM <span className="quantum-gradient">SPIKE</span>
+              <sup>2026</sup>
+            </h1>
+
+            <p className="hero-subtitle">
+              {site.subtitle}
+            </p>
+
+            <div className="theme-quote-badge">
+              <Sparkles size={15} />
+              <span>&ldquo;{site.themeQuote}&rdquo;</span>
+            </div>
+
+            <div className="motto-strip">
+              <span>⚡ {site.motto}</span>
+              <span>•</span>
+              <span>🌐 {site.pillars}</span>
+            </div>
+
+            <p className="hero-host">
+              Organized by <strong>{site.institution.department}</strong>, in collaboration with{" "}
+              <strong>{site.institution.iqac}</strong>, {site.institution.college} (
+              {site.institution.accreditation}).
+            </p>
+
             <div className="hero-actions">
-              <a className="button primary" href="#registration">Register for the conference <ArrowRight size={18} /></a>
-              <a className="button ghost" href={site.brochure} target="_blank" rel="noreferrer"><Download size={17} /> View brochure</a>
+              <a
+                href={site.links.registrationForm}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-primary-glow"
+              >
+                <span>Register for Conference</span>
+                <ArrowRight size={17} />
+              </a>
+
+              <button
+                onClick={() => setBrochureOpen(true)}
+                className="btn-glass"
+              >
+                <Download size={17} />
+                <span>View Official Brochure</span>
+              </button>
+
+              <a href="#portal" className="btn-glass">
+                <FileText size={17} />
+                <span>Call for Abstracts</span>
+              </a>
             </div>
-            <div className="hero-meta">
-              <span><CalendarDays size={18} /> 08–09 October 2026</span>
-              <span><MapPin size={18} /> Bankura Sammilani College, West Bengal</span>
+
+            <div className="hero-meta-strip">
+              <div className="meta-item">
+                <CalendarDays size={16} />
+                <span>{site.dates}</span>
+              </div>
+              <div className="meta-item">
+                <MapPin size={16} />
+                <span>{site.institution.college}, West Bengal</span>
+              </div>
+              <div className="meta-item">
+                <Mail size={16} />
+                <a href={`mailto:${site.email}`}>{site.email}</a>
+              </div>
             </div>
           </div>
-          <div className="hero-orb" aria-hidden="true">
-            <div className="orb-core">Q</div>
-            <div className="orbit o1" /><div className="orbit o2" /><div className="orbit o3" />
-            <div className="particle p1" /><div className="particle p2" /><div className="particle p3" />
+
+          {/* Right Visual: Atom Logo Display & Countdown */}
+          <div className="hero-visual">
+            <div className="hero-logo-display">
+              <div className="hero-logo-frame">
+                <div className="hero-atom-ring ring-1" />
+                <div className="hero-atom-ring ring-2" />
+                <div className="hero-atom-ring ring-3" />
+                <div className="hero-logo-core">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={site.logo} alt="Quantum Spike 2026 Official Logo" />
+                </div>
+              </div>
+            </div>
+
+            <div className="quantum-core-card">
+              <CountdownTimer />
+
+              <div className="hero-card-links">
+                <a
+                  href={site.links.registrationForm}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="quick-link-pill"
+                >
+                  <Send size={14} />
+                  <span>Google Form</span>
+                </a>
+                <a href="#registration" className="quick-link-pill">
+                  <CreditCard size={14} />
+                  <span>Bank &amp; UPI</span>
+                </a>
+                <a href="#schedule" className="quick-link-pill">
+                  <Clock size={14} />
+                  <span>Schedule</span>
+                </a>
+                <a href="#venue" className="quick-link-pill">
+                  <MapPin size={14} />
+                  <span>Directions</span>
+                </a>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
+      {/* ================= STATS STRIP ================= */}
       <section className="stats-strip">
-        <div className="container stats">
-          <div><strong>02</strong><span>Conference days</span></div>
-          <div><strong>10</strong><span>Research themes</span></div>
-          <div><strong>09+</strong><span>Resource persons</span></div>
-          <div><strong>₹300</strong><span>Student registration</span></div>
+        <div className="container stats-grid">
+          <div className="stat-item">
+            <div className="stat-icon">
+              <Calendar size={22} />
+            </div>
+            <div className="stat-content">
+              <strong>02</strong>
+              <span>Days of Academic Deliberations</span>
+            </div>
+          </div>
+
+          <div className="stat-item">
+            <div className="stat-icon">
+              <Microscope size={22} />
+            </div>
+            <div className="stat-content">
+              <strong>10</strong>
+              <span>Frontier Research Themes</span>
+            </div>
+          </div>
+
+          <div className="stat-item">
+            <div className="stat-icon">
+              <Users size={22} />
+            </div>
+            <div className="stat-content">
+              <strong>09+</strong>
+              <span>Eminent Resource Persons</span>
+            </div>
+          </div>
+
+          <div className="stat-item">
+            <div className="stat-icon">
+              <Award size={22} />
+            </div>
+            <div className="stat-content">
+              <strong>₹300</strong>
+              <span>Subsidized Student Registration</span>
+            </div>
+          </div>
         </div>
       </section>
 
+      {/* ================= ABOUT SECTION ================= */}
       <section className="section" id="about">
-        <div className="container two-col">
-          <SectionTitle eyebrow="01 · The conference" title="Where fundamental physics meets tomorrow." text="Quantum Spike 2026 is designed as an open, interdisciplinary platform for exchanging ideas across quantum science, optics, condensed matter and emerging technologies." />
+        <div className="container about-grid">
           <div className="about-card">
-            <div className="card-icon"><Microscope /></div>
-            <p>The conference aligns with the vision of India’s National Quantum Mission by connecting young minds with contemporary research and practical insights. It aims to inspire higher studies, strengthen scientific outlook and build a motivated community around India’s growing quantum ecosystem.</p>
-            <div className="mini-rule" />
-            <span className="small-label">HOST INSTITUTION</span>
-            <strong>Department of Physics<br />Bankura Sammilani College</strong>
+            <span className="eyebrow">01 · About the Conference</span>
+            <h2>Where Fundamental Physics Meets Tomorrow</h2>
+            <p>
+              The primary goal of <strong>QUANTUM SPIKE – 2026</strong> is to create a vibrant academic
+              platform that brings together students, research scholars, faculty members, and researchers to
+              explore recent developments and emerging directions across contemporary physics, optics, and
+              emerging technologies.
+            </p>
+            <p>
+              The event aligns with the core vision of India&apos;s <strong>National Quantum Mission</strong> by
+              connecting young minds with experts working in diverse areas of modern physics through plenary
+              lectures, invited talks, oral paper presentations, and interactive exhibitions.
+            </p>
+
+            <div className="about-highlights">
+              <div className="about-hl-item">
+                <Check size={18} />
+                <span>Funded by Anusandhan National Research Foundation (ANRF / SERB-DST)</span>
+              </div>
+              <div className="about-hl-item">
+                <Check size={18} />
+                <span>Paper presentation slots &amp; publication in conference abstract volume</span>
+              </div>
+              <div className="about-hl-item">
+                <Check size={18} />
+                <span>Dedicated pickup shuttle services from Durgapur Airport (RDP) &amp; Bankura (BQA)</span>
+              </div>
+            </div>
+
+            <div className="college-badge">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={site.institution.logo}
+                alt="Bankura Sammilani College Logo"
+                className="college-logo-img"
+              />
+              <div className="college-info">
+                <strong>Bankura Sammilani College (Est. 1948)</strong>
+                <span>NAAC Accredited B++ (CGPA 2.97) • Affiliated with Bankura University</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Important Dates */}
+          <div className="deadlines-card">
+            <span className="eyebrow">Key Timeline</span>
+            <h3>Important Dates</h3>
+            <div className="deadline-list">
+              {site.deadlines.map((d) => (
+                <div
+                  key={d.label}
+                  className={`deadline-row ${d.highlight ? "highlight" : ""}`}
+                >
+                  <span className="deadline-label">{d.label}</span>
+                  <span className="deadline-date">{d.date}</span>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-6 pt-6 border-t border-white/10" style={{ marginTop: "24px", paddingTop: "20px", borderTop: "1px solid rgba(255,255,255,0.08)" }}>
+              <div className="flex items-center justify-between" style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                <div>
+                  <strong style={{ display: "block", color: "#fff", fontSize: "14px" }}>Registration Window</strong>
+                  <span style={{ fontSize: "12px", color: "#94a3b8" }}>10 September – 05 October 2026</span>
+                </div>
+                <a
+                  href={site.links.registrationForm}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-primary-glow"
+                  style={{ padding: "10px 18px", fontSize: "12px" }}
+                >
+                  Register Now →
+                </a>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      <section className="section dark-section" id="themes">
+      {/* ================= OFFICIAL CONFERENCE BROCHURE SPOTLIGHT ================= */}
+      <section className="section brochure-showcase-section" id="brochure" style={{ padding: "40px 0 80px" }}>
         <div className="container">
-          <SectionTitle eyebrow="02 · Research themes" title="Ten directions. One scientific conversation." text="The programme spans established frontiers and emerging technologies, welcoming interdisciplinary perspectives." />
-          <div className="topic-grid">
-            {site.topics.map((topic, i) => <div className="topic" key={topic}><span>{String(i + 1).padStart(2, "0")}</span><strong>{topic}</strong><ArrowRight size={17} /></div>)}
+          <div className="brochure-spotlight-card">
+            <div
+              className="brochure-preview-wrapper"
+              onClick={() => setBrochureOpen(true)}
+              role="button"
+              tabIndex={0}
+              title="Click to view full brochure"
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={site.links.brochurePoster}
+                alt="Quantum Spike 2026 Official Brochure Poster"
+              />
+              <div className="brochure-zoom-badge">
+                <Download size={18} />
+                <span>Click to Expand / Fullscreen</span>
+              </div>
+            </div>
+
+            <div className="brochure-spotlight-content">
+              <span className="eyebrow">Official Circular &amp; Announcement</span>
+              <h3>Conference Brochure &amp; Circular</h3>
+              <p>
+                The official circular for <strong>Quantum Spike 2026</strong> details the conference theme,
+                honorable patron, chairperson, convenor, organizing committee members, invited resource persons,
+                and registration instructions.
+              </p>
+
+              <div className="theme-quote-badge" style={{ marginBottom: "22px" }}>
+                <Sparkles size={16} />
+                <span>&ldquo;{site.themeQuote}&rdquo;</span>
+              </div>
+
+              <div className="brochure-spotlight-actions">
+                <button
+                  onClick={() => setBrochureOpen(true)}
+                  className="btn-primary-glow"
+                >
+                  <Download size={16} />
+                  <span>View Fullscreen Lightbox</span>
+                </button>
+
+                <a
+                  href={site.links.brochurePoster}
+                  download="Quantum-Spike-2026-Brochure.jpg"
+                  className="btn-glass"
+                >
+                  <Download size={16} />
+                  <span>Download Poster (JPG)</span>
+                </a>
+
+                <a
+                  href={site.links.brochureDrive}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-glass"
+                >
+                  <ExternalLink size={16} />
+                  <span>Google Drive PDF</span>
+                </a>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
+      {/* ================= RESEARCH THEMES ================= */}
+      <section className="section themes-section" id="themes">
+        <div className="container">
+          <div className="section-head text-center">
+            <span className="eyebrow">02 · Scientific Scope</span>
+            <h2>Ten Research Themes. One Cohesive Dialogue.</h2>
+            <p>
+              The conference covers cutting-edge theoretical, experimental, and computational research spanning
+              fundamental quantum physics to deployable emerging technologies.
+            </p>
+          </div>
+
+          <div className="themes-grid">
+            {site.topics.map((t, idx) => (
+              <div className="theme-card" key={t.title}>
+                <span className="theme-number">{String(idx + 1).padStart(2, "0")}</span>
+                <div className="theme-content">
+                  <h3>{t.title}</h3>
+                  <p>{t.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ================= RESOURCE PERSONS (SPEAKERS) ================= */}
       <section className="section" id="speakers">
         <div className="container">
-          <SectionTitle eyebrow="03 · Resource persons" title="Learn from researchers across India." text="The conference brings together eminent scientists, researchers and educators from leading institutions." />
-          <div className="people-grid">
-            {site.people.resourcePersons.map((person, i) => {
-              const [name, inst] = person.split(" — ");
-              return <article className="person-card" key={person}><div className="person-num">{String(i + 1).padStart(2, "0")}</div><h3>{name}</h3><p>{inst}</p></article>;
-            })}
+          <div className="section-head text-center">
+            <span className="eyebrow">03 · Eminent Speakers</span>
+            <h2>Distinguished Resource Persons</h2>
+            <p>
+              Learn from internationally renowned physicists, senior academicians, and pioneering researchers
+              from leading institutions across India and abroad.
+            </p>
+          </div>
+
+          <div className="speakers-grid">
+            {site.speakers.map((s) => (
+              <div
+                key={s.name}
+                className="speaker-card"
+                onClick={() => setSelectedSpeaker(s)}
+                role="button"
+                tabIndex={0}
+              >
+                <div className="speaker-avatar-wrap">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={s.image} alt={s.name} className="speaker-avatar" />
+                </div>
+                <h3>{s.name}</h3>
+                <p className="speaker-institution">{s.institution}</p>
+                <span className="speaker-topic-pill">{s.topic}</span>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
-      <section className="section soft-section" id="programme">
-        <div className="container two-col programme-layout">
-          <SectionTitle eyebrow="04 · Programme" title="Two days built around exchange." text="The detailed scientific programme, presentation slots and session timings can be published here as soon as the final schedule is approved." />
-          <div className="timeline">
-            <div className="timeline-item"><span>DAY 01</span><div><h3>08 October 2026</h3><p>Inauguration · Keynote sessions · Invited talks · Technical discussions</p></div></div>
-            <div className="timeline-item"><span>DAY 02</span><div><h3>09 October 2026</h3><p>Invited talks · Research presentations · Interactive sessions · Valedictory</p></div></div>
-            <div className="timeline-note"><Check size={17} /> Final programme will be updated on this page.</div>
-          </div>
-        </div>
-      </section>
-
-      <section className="section" id="committee">
+      {/* ================= PROGRAMME SCHEDULE ================= */}
+      <section className="section schedule-section" id="schedule">
         <div className="container">
-          <SectionTitle eyebrow="05 · Leadership & committee" title="The people behind Quantum Spike." />
-          <div className="leadership-grid">
-            {[site.people.patron, site.people.chairperson, site.people.convenor].map((p, i) => <article className={`leader-card ${i === 2 ? "featured" : ""}`} key={p.name}><span>{["Patron", "Chairperson", "Convenor"][i]}</span><h3>{p.name}</h3><p>{p.role}</p></article>)}
+          <div className="section-head text-center">
+            <span className="eyebrow">04 · Scientific Programme</span>
+            <h2>Two-Day Detailed Schedule</h2>
+            <p>
+              Explore session timings, inaugural addresses, invited lectures, oral presentations, and interactive
+              poster sessions.
+            </p>
           </div>
-          <div className="committee-list"><div className="committee-title">Organizing committee</div>{site.people.organizing.map(p => <div className="committee-row" key={p.name}><strong>{p.name}</strong><span>{p.role}</span></div>)}</div>
-        </div>
-      </section>
 
-      <section className="registration-section" id="registration">
-        <div className="container registration-grid">
-          <div><span className="eyebrow">06 · Registration</span><h2>Join the conversation.</h2><p>Registration opens <strong>10 September 2026</strong> and closes <strong>05 October 2026</strong>. Choose the category that applies to you.</p><a className="button light" href={`mailto:${site.email}?subject=Quantum Spike 2026 Registration enquiry`}>Register / enquire by email <ArrowRight size={17} /></a></div>
-          <div className="fee-card">{site.fees.map(f => <div className="fee-row" key={f.label}><span>{f.label}</span><strong>{f.amount}</strong></div>)}<div className="fee-note">Registration instructions and payment details will be published here before registration opens.</div></div>
-        </div>
-      </section>
+          <div className="day-switch-wrap">
+            <div className="day-switcher">
+              <button
+                className={`day-tab ${activeDay === "day1" ? "active" : ""}`}
+                onClick={() => setActiveDay("day1")}
+              >
+                Day 1 • 08 October 2026
+              </button>
+              <button
+                className={`day-tab ${activeDay === "day2" ? "active" : ""}`}
+                onClick={() => setActiveDay("day2")}
+              >
+                Day 2 • 09 October 2026
+              </button>
+            </div>
+          </div>
 
-      <section className="section faq-section">
-        <div className="container two-col">
-          <SectionTitle eyebrow="07 · Practical information" title="Everything you need before you arrive." />
-          <div className="faq-list">
-            {["Who can attend?", "What are the registration dates?", "Where is the conference held?", "How will final programme and submission details be shared?"] .map((q, i) => <div className="faq" key={q}><button onClick={() => setActiveFaq(activeFaq === i ? null : i)}><span>{q}</span><ChevronDown size={18} className={activeFaq === i ? "rotate" : ""} /></button>{activeFaq === i && <p>{["Students, PhD/research scholars, faculty members, early-career researchers and scientists interested in the conference themes are welcome.", `Registration opens ${site.registrationOpen} and closes ${site.registrationClose}.`, "The event will be hosted by the Department of Physics, Bankura Sammilani College, Bankura, West Bengal.", "The organizing committee can publish the approved programme, abstract guidelines, presentation instructions and downloadable notices here as they are finalized."][i]}</p>}</div>)}
+          <div className="timeline-card">
+            <h3 className="schedule-day-title">{site.schedule[activeDay].title}</h3>
+            <p className="schedule-day-sub">{site.schedule[activeDay].date}</p>
+
+            <div className="timeline-items">
+              {site.schedule[activeDay].items.map((item) => (
+                <div className="timeline-item" key={item.time + item.title}>
+                  <div className="timeline-time">{item.time}</div>
+                  <div className="timeline-content">
+                    {item.badge && <span className="timeline-badge">{item.badge}</span>}
+                    <h4>{item.title}</h4>
+                    <p>{item.details}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
-      <section className="contact-section" id="contact">
+      {/* ================= CALL FOR ABSTRACTS & PORTAL ================= */}
+      <AbstractPortal />
+
+      {/* ================= LEADERSHIP & COMMITTEES ================= */}
+      <section className="section" id="committees">
+        <div className="container">
+          <div className="section-head text-center">
+            <span className="eyebrow">06 · Leadership &amp; Organization</span>
+            <h2>The Leadership Behind Quantum Spike 2026</h2>
+            <p>
+              Guided by dedicated academic leadership, distinguished national advisors, and the Department of
+              Physics faculty team.
+            </p>
+          </div>
+
+          <div className="committee-nav-tabs">
+            <button
+              className={`comm-tab ${activeCommitteeTab === "core" ? "active" : ""}`}
+              onClick={() => setActiveCommitteeTab("core")}
+            >
+              Core Leadership
+            </button>
+            <button
+              className={`comm-tab ${activeCommitteeTab === "advisory" ? "active" : ""}`}
+              onClick={() => setActiveCommitteeTab("advisory")}
+            >
+              Advisory Committee ({site.people.advisory.length})
+            </button>
+            <button
+              className={`comm-tab ${activeCommitteeTab === "organizing" ? "active" : ""}`}
+              onClick={() => setActiveCommitteeTab("organizing")}
+            >
+              Organizing Committee ({site.people.organizing.length})
+            </button>
+          </div>
+
+          {activeCommitteeTab === "core" && (
+            <div className="core-grid">
+              {site.people.core.map((p) => (
+                <div className="core-card" key={p.name}>
+                  {p.image ? (
+                    <div className="core-avatar-wrap">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src={p.image} alt={p.name} className="core-avatar" />
+                    </div>
+                  ) : (
+                    <div className="core-avatar-wrap flex items-center justify-center bg-slate-800 text-cyan-400">
+                      <Users size={32} />
+                    </div>
+                  )}
+                  <span className="core-role">{p.designation}</span>
+                  <h3>{p.name}</h3>
+                  <p>{p.role}</p>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {activeCommitteeTab === "advisory" && (
+            <div className="advisory-grid">
+              {site.people.advisory.map((m) => (
+                <div className="advisory-row" key={m.name}>
+                  <Award size={20} className="text-cyan-400 flex-shrink-0" />
+                  <div>
+                    <h4>{m.name}</h4>
+                    <p>{m.role}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {activeCommitteeTab === "organizing" && (
+            <div className="advisory-grid">
+              {site.people.organizing.map((m) => (
+                <div className="advisory-row" key={m.name}>
+                  <Users size={20} className="text-cyan-400 flex-shrink-0" />
+                  <div>
+                    <h4>{m.name}</h4>
+                    <p>{m.role}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* ================= REGISTRATION & PAYMENT HUB ================= */}
+      <section className="section registration-hub" id="registration">
+        <div className="container">
+          <div className="section-head text-center">
+            <span className="eyebrow">07 · Delegate Registration</span>
+            <h2>Register for Quantum Spike 2026</h2>
+            <p>
+              Registration opens on <strong>10 September 2026</strong> and closes on{" "}
+              <strong>05 October 2026</strong>. Select your category, complete fee payment, and submit the
+              official Google Form.
+            </p>
+          </div>
+
+          {/* Pricing Tiers */}
+          <div className="fees-grid">
+            {site.fees.map((fee) => (
+              <div
+                key={fee.category}
+                className={`fee-card ${fee.popular ? "featured" : ""}`}
+              >
+                {fee.popular && <span className="popular-badge">MOST POPULAR</span>}
+                <h3 className="fee-category">{fee.category}</h3>
+                <p className="fee-desc">{fee.description}</p>
+                <div className="fee-price">
+                  {fee.amount} <span>/ delegate</span>
+                </div>
+
+                <ul className="fee-perks">
+                  {fee.perks.map((perk) => (
+                    <li key={perk} className="fee-perk-item">
+                      <Check size={16} />
+                      <span>{perk}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                <a
+                  href={site.links.registrationForm}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={fee.popular ? "btn-primary-glow text-center" : "btn-glass text-center"}
+                  style={{ justifyContent: "center" }}
+                >
+                  <span>Register ({fee.amount})</span>
+                  <ArrowRight size={15} />
+                </a>
+              </div>
+            ))}
+          </div>
+
+          {/* Payment & UPI Card */}
+          <div className="payment-details-card">
+            <div className="qr-box">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={site.payment.qrImage}
+                alt="Bankura Sammilani College UPI QR Code"
+              />
+              <span>Scan via any UPI App</span>
+            </div>
+
+            <div className="bank-info">
+              <span className="eyebrow">Direct Bank Transfer / NEFT / RTGS / IMPS</span>
+              <h3>Indian Bank Account Details</h3>
+
+              <div className="bank-table">
+                <div className="bank-field">
+                  <div>
+                    <span className="field-label">Account Name</span>
+                    <span className="field-value">{site.payment.beneficiary}</span>
+                  </div>
+                  <button
+                    onClick={() => handleCopy(site.payment.beneficiary, "name")}
+                    className="btn-copy"
+                    title="Copy Account Name"
+                  >
+                    {copiedKey === "name" ? <Check size={17} color="#00f2fe" /> : <Copy size={17} />}
+                  </button>
+                </div>
+
+                <div className="bank-field">
+                  <div>
+                    <span className="field-label">Account Number</span>
+                    <span className="field-value">{site.payment.accountNumber}</span>
+                  </div>
+                  <button
+                    onClick={() => handleCopy(site.payment.accountNumber, "acc")}
+                    className="btn-copy"
+                    title="Copy Account Number"
+                  >
+                    {copiedKey === "acc" ? <Check size={17} color="#00f2fe" /> : <Copy size={17} />}
+                  </button>
+                </div>
+
+                <div className="bank-field">
+                  <div>
+                    <span className="field-label">Bank &amp; Branch</span>
+                    <span className="field-value">
+                      {site.payment.bank} ({site.payment.branch})
+                    </span>
+                  </div>
+                </div>
+
+                <div className="bank-field">
+                  <div>
+                    <span className="field-label">IFSC Code</span>
+                    <span className="field-value">{site.payment.ifsc}</span>
+                  </div>
+                  <button
+                    onClick={() => handleCopy(site.payment.ifsc, "ifsc")}
+                    className="btn-copy"
+                    title="Copy IFSC Code"
+                  >
+                    {copiedKey === "ifsc" ? <Check size={17} color="#00f2fe" /> : <Copy size={17} />}
+                  </button>
+                </div>
+              </div>
+
+              <div className="payment-note">
+                <QrCode size={20} className="flex-shrink-0 text-amber-400" />
+                <span>
+                  <strong>Important:</strong> After transferring funds or scanning QR, save your payment receipt
+                  and note down the <strong>Transaction Reference ID / UTR Number</strong>. Upload it when
+                  completing the Google Form registration below.
+                </span>
+              </div>
+
+              <div style={{ marginTop: "24px", display: "flex", gap: "14px", flexWrap: "wrap" }}>
+                <a
+                  href={site.links.registrationForm}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-primary-glow"
+                >
+                  <Send size={16} />
+                  <span>Open Official Google Form Registration</span>
+                </a>
+
+                <a
+                  href={`mailto:${site.email}?subject=Quantum Spike 2026 Payment Enquiry`}
+                  className="btn-glass"
+                >
+                  <Mail size={16} />
+                  <span>Payment Support Desk</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ================= VENUE & TRAVEL GUIDE ================= */}
+      <section className="section venue-section" id="venue">
+        <div className="container">
+          <div className="section-head text-center">
+            <span className="eyebrow">08 · Travel &amp; Location</span>
+            <h2>Conference Venue &amp; Travel Guide</h2>
+            <p>
+              Bankura Sammilani College is situated in the scenic district of Bankura, West Bengal, easily
+              accessible by air, rail, and road.
+            </p>
+          </div>
+
+          <div className="venue-grid">
+            <div className="venue-card">
+              <div className="venue-image-wrap">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={site.institution.campusImage}
+                  alt="Bankura Sammilani College Campus"
+                  className="venue-image"
+                />
+                <span className="venue-overlay-badge">Est. September 01, 1948</span>
+              </div>
+
+              <div className="venue-details">
+                <h3>{site.institution.college}</h3>
+                <p>
+                  A premier educational landmark founded by the Bankura Sammilani Registered Society, situated
+                  in the heart of Bankura town between the sacred rivers Dwarakeshwar and Gandheswari.
+                </p>
+
+                <div className="map-embed-container">
+                  <iframe
+                    src={site.institution.mapEmbedUrl}
+                    title="Bankura Sammilani College Location"
+                    loading="lazy"
+                    allowFullScreen
+                  />
+                </div>
+
+                <div style={{ marginTop: "16px" }}>
+                  <a
+                    href={site.institution.mapDirectLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn-glass"
+                    style={{ width: "100%", justifyContent: "center" }}
+                  >
+                    <MapPin size={16} />
+                    <span>Open in Google Maps App</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            {/* Travel Guides */}
+            <div className="travel-guides">
+              {site.travel.map((item) => (
+                <div className="travel-card" key={item.mode}>
+                  <div className="travel-icon">
+                    {item.mode === "By Air" ? (
+                      <Plane size={22} />
+                    ) : item.mode === "By Train" ? (
+                      <Train size={22} />
+                    ) : (
+                      <Bus size={22} />
+                    )}
+                  </div>
+                  <div className="travel-info">
+                    <h4>{item.title}</h4>
+                    <span className="travel-tag">{item.tag}</span>
+                    <p>{item.description}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ================= FAQ SECTION ================= */}
+      <section className="section" id="faq">
+        <div className="container">
+          <div className="section-head text-center">
+            <span className="eyebrow">09 · Frequently Asked Questions</span>
+            <h2>Common Queries &amp; Assistance</h2>
+            <p>Everything you need to know about delegate participation, papers, and logistics.</p>
+          </div>
+
+          <div className="faq-wrap">
+            {site.faqs.map((faq, idx) => (
+              <div className="faq-item" key={faq.q}>
+                <button
+                  className="faq-button"
+                  onClick={() => setActiveFaq(activeFaq === idx ? null : idx)}
+                  aria-expanded={activeFaq === idx}
+                >
+                  <span>{faq.q}</span>
+                  <ChevronDown size={19} className={activeFaq === idx ? "rotate" : ""} />
+                </button>
+                {activeFaq === idx && <p className="faq-answer">{faq.a}</p>}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ================= CONTACT SECTION ================= */}
+      <section className="section contact-section" id="contact">
         <div className="container contact-grid">
-          <div><span className="eyebrow">08 · Contact</span><h2>Questions? Let’s connect.</h2><p>For registration, participation, programme or institutional enquiries, contact the organizing team.</p></div>
-          <div className="contact-card"><a href={`mailto:${site.email}`}><Mail size={19} /><span>{site.email}</span></a><div><MapPin size={19} /><span>Department of Physics<br />Bankura Sammilani College<br />Bankura, West Bengal, India</span></div></div>
+          <div>
+            <span className="eyebrow">10 · Get In Touch</span>
+            <h2>Connect with the Organizing Team</h2>
+            <p style={{ marginTop: "14px", color: "#94a3b8" }}>
+              For technical queries regarding paper submissions, delegate registrations, accommodation requests,
+              or sponsorship proposals, please reach out to our team.
+            </p>
+
+            <div style={{ marginTop: "24px", display: "flex", gap: "12px", flexWrap: "wrap" }}>
+              <a
+                href={site.links.registrationForm}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-primary-glow"
+              >
+                <span>Google Form Registration</span>
+                <ExternalLink size={15} />
+              </a>
+
+              <a
+                href={site.links.officialSite}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-glass"
+              >
+                <span>Google Site Reference</span>
+                <ExternalLink size={15} />
+              </a>
+            </div>
+          </div>
+
+          <div className="contact-card">
+            <div className="contact-row">
+              <Mail size={20} />
+              <div>
+                <strong>Official Email</strong>
+                <a href={`mailto:${site.email}`}>{site.email}</a>
+              </div>
+            </div>
+
+            <div className="contact-row">
+              <Building size={20} />
+              <div>
+                <strong>Host Institution</strong>
+                <span>
+                  Department of Physics, Bankura Sammilani College
+                  <br />
+                  Kenduadihi, Bankura, West Bengal - 722102, India
+                </span>
+              </div>
+            </div>
+
+            <div className="contact-row">
+              <Award size={20} />
+              <div>
+                <strong>Grant Details</strong>
+                <span>ANRF (SERB-DST) Core Research Grant Project</span>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
-      <footer><div className="container footer-inner"><div className="brand footer-brand"><span className="brand-mark"><Orbit size={21} /></span><span><strong>QUANTUM</strong><em>SPIKE</em><small>2026 · BSC</small></span></div><p>National Conference on Contemporary Physics, Optics &amp; Emerging Technologies</p><div className="footer-links"><a href={site.officialSite} target="_blank" rel="noreferrer">Current site <ExternalLink size={13} /></a><a href={site.demoSite} target="_blank" rel="noreferrer">Demo reference <ExternalLink size={13} /></a></div></div></footer>
+      {/* ================= FOOTER ================= */}
+      <footer>
+        <div className="container">
+          <div className="footer-top">
+            <div className="footer-col">
+              <div className="brand" style={{ marginBottom: "14px" }}>
+                <div className="brand-mark">
+                  <Orbit size={22} />
+                </div>
+                <div className="brand-text">
+                  <span className="brand-title">
+                    QUANTUM <span>SPIKE</span>
+                  </span>
+                  <span className="brand-sub">2026 • BSC PHYS</span>
+                </div>
+              </div>
+              <p>
+                National / International Conference on Contemporary Physics, Optics and Emerging Technologies.
+                Organized by the Department of Physics in collaboration with IQAC, Bankura Sammilani College.
+                Funded by ANRF (SERB-DST).
+              </p>
+            </div>
+
+            <div className="footer-col">
+              <h4>Quick Navigation</h4>
+              <ul className="footer-nav">
+                <li><a href="#about">About Conference</a></li>
+                <li><a href="#themes">Research Themes</a></li>
+                <li><a href="#speakers">Distinguished Speakers</a></li>
+                <li><a href="#schedule">Programme Schedule</a></li>
+                <li><a href="#registration">Fees &amp; UPI Details</a></li>
+                <li><a href="#portal">Abstract Submission</a></li>
+              </ul>
+            </div>
+
+            <div className="footer-col">
+              <h4>Official Resources</h4>
+              <ul className="footer-nav">
+                <li>
+                  <button onClick={() => setBrochureOpen(true)} className="text-left">
+                    Brochure Poster Lightbox
+                  </button>
+                </li>
+                <li>
+                  <a href={site.links.brochureDrive} target="_blank" rel="noopener noreferrer">
+                    Google Drive Brochure PDF ↗
+                  </a>
+                </li>
+                <li>
+                  <a href={site.links.registrationForm} target="_blank" rel="noopener noreferrer">
+                    Official Registration Form ↗
+                  </a>
+                </li>
+                <li>
+                  <a href={site.links.officialSite} target="_blank" rel="noopener noreferrer">
+                    Google Site (Original) ↗
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div className="footer-bottom">
+            <span>© 2026 Department of Physics, Bankura Sammilani College. All rights reserved.</span>
+            <span>ANRF (SERB-DST) Core Research Grant Funded</span>
+          </div>
+        </div>
+      </footer>
+
+      {/* ================= MODALS ================= */}
+      <BrochureModal isOpen={brochureOpen} onClose={() => setBrochureOpen(false)} />
+      <SpeakerModal speaker={selectedSpeaker} onClose={() => setSelectedSpeaker(null)} />
     </main>
   );
 }

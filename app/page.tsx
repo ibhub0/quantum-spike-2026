@@ -38,22 +38,66 @@ import BrochureModal from "@/components/BrochureModal";
 import SpeakerModal from "@/components/SpeakerModal";
 import AbstractPortal from "@/components/AbstractPortal";
 
-const navItems = [
-  ["About", "about"],
-  ["Themes", "themes"],
-  ["Speakers", "speakers"],
-  ["Schedule", "schedule"],
-  ["Committees", "committees"],
-  ["Volunteers", "volunteers"],
-  ["Registration", "registration"],
-  ["Submissions", "portal"],
-  ["Venue", "venue"],
-  ["FAQ", "faq"],
-  ["Contact", "contact"],
+interface NavSubItem {
+  label: string;
+  href?: string;
+  desc?: string;
+  badge?: string;
+  isModal?: boolean;
+  tab?: "core" | "advisory" | "organizing" | "volunteers";
+}
+
+interface NavCategory {
+  title: string;
+  href?: string;
+  items?: NavSubItem[];
+}
+
+const navCategories: NavCategory[] = [
+  {
+    title: "About",
+    href: "#about",
+  },
+  {
+    title: "Programme",
+    items: [
+      { label: "Research Themes", href: "#themes", desc: "10 Frontier physics focus tracks" },
+      { label: "Distinguished Speakers", href: "#speakers", desc: "Invited national & international physicists" },
+      { label: "Detailed Schedule", href: "#schedule", desc: "Two-day academic agenda & timings" },
+    ],
+  },
+  {
+    title: "Committees",
+    items: [
+      { label: "Core Leadership", href: "#committees", tab: "core", desc: "Patron, Chairperson & Convenor" },
+      { label: "Advisory Committee", href: "#committees", tab: "advisory", desc: "Distinguished national physicists" },
+      { label: "Organizing Committee", href: "#committees", tab: "organizing", desc: "Department of Physics faculty" },
+      { label: "Student Volunteers", href: "#committees", tab: "volunteers", desc: "Dedicated student organizing team", badge: "Volunteers" },
+    ],
+  },
+  {
+    title: "Registration & Papers",
+    items: [
+      { label: "Delegate Registration Fees", href: "#registration", desc: "Students ₹300, Scholars ₹500, Faculty ₹1000" },
+      { label: "Bank & UPI Details", href: "#registration", desc: "NEFT/RTGS & scan-to-pay UPI QR" },
+      { label: "Abstract Submission Portal", href: "#portal", desc: "Oral & poster paper submission" },
+      { label: "Preparation Guidelines", href: "#portal", desc: "300 words format, template & awards" },
+    ],
+  },
+  {
+    title: "Information",
+    items: [
+      { label: "Venue & Travel Guide", href: "#venue", desc: "Air, rail & road routes to Bankura" },
+      { label: "Frequently Asked Questions", href: "#faq", desc: "Common queries & assistance" },
+      { label: "Official Circular Brochure", isModal: true, desc: "Fullscreen circular poster & PDF" },
+      { label: "Contact Organizing Team", href: "#contact", desc: "Physics department & helpdesk" },
+    ],
+  },
 ];
 
 export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const [brochureOpen, setBrochureOpen] = useState(false);
   const [selectedSpeaker, setSelectedSpeaker] = useState<Speaker | null>(null);
   const [activeCommitteeTab, setActiveCommitteeTab] = useState<"core" | "advisory" | "organizing" | "volunteers">("core");
@@ -65,6 +109,17 @@ export default function Home() {
     navigator.clipboard.writeText(text);
     setCopiedKey(key);
     setTimeout(() => setCopiedKey(null), 2500);
+  };
+
+  const handleNavClick = (subItem: NavSubItem) => {
+    if (subItem.isModal) {
+      setBrochureOpen(true);
+    }
+    if (subItem.tab) {
+      setActiveCommitteeTab(subItem.tab);
+    }
+    setOpenDropdown(null);
+    setMenuOpen(false);
   };
 
   return (
@@ -103,24 +158,85 @@ export default function Home() {
               <img src={site.logo} alt="Quantum Spike 2026 Official Logo" className="brand-logo-img" />
             </div>
             <div className="brand-text">
-              <span className="brand-title">
-                QUANTUM <span>SPIKE</span>
-              </span>
-              <span className="brand-sub">2026 • BANKURA SAMMILANI COLLEGE</span>
+              <div className="brand-title-row">
+                <span className="brand-title">
+                  QUANTUM <span>SPIKE</span>
+                </span>
+                <span className="brand-year-tag">2026</span>
+              </div>
+              <span className="brand-sub">BANKURA SAMMILANI COLLEGE</span>
             </div>
           </a>
 
+          {/* Desktop & Mobile Dropdown Navigation */}
           <div className={`nav-links ${menuOpen ? "is-open" : ""}`}>
-            {navItems.map(([label, id]) => (
-              <a
-                key={id}
-                href={`#${id}`}
-                className="nav-link"
-                onClick={() => setMenuOpen(false)}
-              >
-                {label}
-              </a>
-            ))}
+            {navCategories.map((cat) => {
+              if (!cat.items) {
+                return (
+                  <a
+                    key={cat.title}
+                    href={cat.href}
+                    className="nav-link direct-link"
+                    onClick={() => {
+                      setOpenDropdown(null);
+                      setMenuOpen(false);
+                    }}
+                  >
+                    {cat.title}
+                  </a>
+                );
+              }
+
+              const isOpen = openDropdown === cat.title;
+
+              return (
+                <div
+                  className="nav-dropdown-wrapper"
+                  key={cat.title}
+                  onMouseLeave={() => setOpenDropdown(null)}
+                >
+                  <button
+                    className={`nav-link dropdown-trigger ${isOpen ? "is-active" : ""}`}
+                    onClick={() => setOpenDropdown(isOpen ? null : cat.title)}
+                    onMouseEnter={() => setOpenDropdown(cat.title)}
+                    aria-expanded={isOpen}
+                  >
+                    <span>{cat.title}</span>
+                    <ChevronDown size={14} className={`dropdown-icon ${isOpen ? "rotate" : ""}`} />
+                  </button>
+
+                  {isOpen && (
+                    <div className="nav-dropdown-menu">
+                      <div className="nav-dropdown-header">
+                        <span>{cat.title}</span>
+                      </div>
+                      <div className="nav-dropdown-list">
+                        {cat.items.map((sub) => (
+                          <a
+                            key={sub.label}
+                            href={sub.href || "#"}
+                            className="nav-dropdown-item"
+                            onClick={(e) => {
+                              if (sub.isModal) e.preventDefault();
+                              handleNavClick(sub);
+                            }}
+                          >
+                            <div className="nav-dropdown-item-main">
+                              <div className="nav-dropdown-item-title">
+                                <strong>{sub.label}</strong>
+                                {sub.badge && <span className="dropdown-badge">{sub.badge}</span>}
+                              </div>
+                              {sub.desc && <span className="nav-dropdown-item-desc">{sub.desc}</span>}
+                            </div>
+                            <ArrowRight size={13} className="nav-dropdown-arrow" />
+                          </a>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              );
+            })}
           </div>
 
           <div className="nav-actions">

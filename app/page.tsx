@@ -32,6 +32,8 @@ import {
   UserCheck,
   GraduationCap,
   Briefcase,
+  Sun,
+  Moon,
 } from "lucide-react";
 
 import { site, Speaker } from "@/lib/site";
@@ -109,6 +111,24 @@ export default function Home() {
   const [activeDay, setActiveDay] = useState<"day1" | "day2">("day1");
   const [activeFaq, setActiveFaq] = useState<number | null>(0);
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
+  const [theme, setTheme] = useState<"dark" | "light">("dark");
+
+  useEffect(() => {
+    const saved = localStorage.getItem("qs_theme") as "dark" | "light" | null;
+    if (saved) {
+      setTheme(saved);
+      document.documentElement.setAttribute("data-theme", saved);
+    } else {
+      document.documentElement.setAttribute("data-theme", "dark");
+    }
+  }, []);
+
+  const toggleTheme = () => {
+    const nextTheme = theme === "dark" ? "light" : "dark";
+    setTheme(nextTheme);
+    document.documentElement.setAttribute("data-theme", nextTheme);
+    localStorage.setItem("qs_theme", nextTheme);
+  };
 
   // Close timer ref for bulletproof hover without flickering/closing on cursor movement
   const closeTimerRef = useRef<NodeJS.Timeout | null>(null);
@@ -410,9 +430,45 @@ export default function Home() {
                 </div>
               );
             })}
+            <div className="mobile-theme-row">
+              <button
+                onClick={toggleTheme}
+                className="btn-mobile-theme"
+              >
+                {theme === "dark" ? (
+                  <>
+                    <Sun size={16} className="theme-icon-sun" />
+                    <span>Switch to Light Theme</span>
+                  </>
+                ) : (
+                  <>
+                    <Moon size={16} className="theme-icon-moon" />
+                    <span>Switch to Dark Theme</span>
+                  </>
+                )}
+              </button>
+            </div>
           </div>
 
           <div className="nav-actions">
+            <button
+              onClick={toggleTheme}
+              className="btn-theme-nav"
+              aria-label={`Switch to ${theme === "dark" ? "Light" : "Dark"} theme`}
+              title={`Switch to ${theme === "dark" ? "Classic Light Academic Theme" : "Quantum Cyber Dark Theme"}`}
+            >
+              {theme === "dark" ? (
+                <>
+                  <Sun size={15} className="theme-icon-sun" />
+                  <span>Light Mode</span>
+                </>
+              ) : (
+                <>
+                  <Moon size={15} className="theme-icon-moon" />
+                  <span>Dark Mode</span>
+                </>
+              )}
+            </button>
             <button
               onClick={() => setBrochureOpen(true)}
               className="btn-brochure-nav"
@@ -482,6 +538,30 @@ export default function Home() {
                 <span className="inst-sub">
                   (SERB-DST) Core Research Grant Project • Govt. of India
                 </span>
+              </div>
+            </div>
+          </div>
+
+          {/* SPONSORED BY Box (Matches the official college reference image) */}
+          <div className="hero-sponsor-banner">
+            <div className="sponsor-banner-badge">
+              <span>✦ SPONSORED BY ✦</span>
+            </div>
+            <div className="sponsor-banner-content">
+              <div className="sponsor-banner-logo">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={site.funding.logo}
+                  alt="ANRF SERB-DST Emblem"
+                  className="sponsor-logo-img"
+                />
+              </div>
+              <div className="sponsor-banner-info">
+                <h3>{site.funding.agency}</h3>
+                <div className="sponsor-banner-subrow">
+                  <span className="sponsor-badge-scheme">{site.funding.scheme}</span>
+                  <span className="sponsor-badge-tagline">{site.funding.tagline}</span>
+                </div>
               </div>
             </div>
           </div>
@@ -563,20 +643,30 @@ export default function Home() {
             {/* Right Visual: Official Crest Pedestal & Instrumentation Countdown */}
             <div className="hero-visual">
               <div className="hero-emblem-card">
-                <div className="emblem-pedestal">
-                  <div className="emblem-glow-ring" />
-                  <div className="emblem-frame">
+                <div className="campus-emblem-combo">
+                  <div className="campus-img-wrap">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={site.institution.campusImage}
+                      alt="Bankura Sammilani College Campus"
+                      className="campus-preview-photo"
+                    />
+                    <div className="campus-photo-badge">
+                      <span>{site.institution.college}</span>
+                    </div>
+                  </div>
+                  <div className="emblem-float-wrap">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={site.logo}
                       alt="Quantum Spike 2026 Official Logo"
-                      className="emblem-img"
+                      className="emblem-float-img"
                     />
                   </div>
                 </div>
                 <div className="emblem-meta">
                   <span className="emblem-meta-title">QUANTUM SPIKE 2026</span>
-                  <span className="emblem-meta-sub">Department of Physics • Bankura Sammilani College</span>
+                  <span className="emblem-meta-sub">{site.institution.department} • {site.institution.accreditation}</span>
                 </div>
               </div>
 

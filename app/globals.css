@@ -44,6 +44,40 @@
 }
 
 /* ============================================================
+   LIGHT THEME DESIGN TOKENS
+   Matches the Official College Academic Cream & Golden Maroon Palette
+   ============================================================ */
+[data-theme="light"] {
+  --bg-deep: #faf7f0;
+  --bg-surface: #f4eee2;
+  --bg-surface-elevated: #ffffff;
+  --bg-card: rgba(255, 255, 255, 0.95);
+  --bg-card-hover: #ffffff;
+
+  --border-subtle: rgba(180, 83, 9, 0.16);
+  --border-medium: rgba(180, 83, 9, 0.28);
+  --border-cyan: rgba(153, 27, 27, 0.45);
+
+  --cyan: #881337; /* Deep Academic Crimson / Maroon from the College Banner */
+  --cyan-bright: #991b1b;
+  --blue: #1e3a8a; /* Classic Royal Academic Navy */
+  --sapphire: #1d4ed8;
+  --indigo: #4338ca;
+  --gold: #b45309;
+  --gold-glow: rgba(180, 83, 9, 0.22);
+  --emerald: #047857;
+
+  --text-main: #0f172a;
+  --text-sub: #334155;
+  --text-muted: #64748b;
+  --text-dim: #94a3b8;
+
+  --shadow-quantum: 0 10px 30px -8px rgba(136, 19, 55, 0.18);
+  --shadow-card: 0 8px 25px -4px rgba(0, 0, 0, 0.08), 0 2px 6px -1px rgba(0, 0, 0, 0.04);
+  --shadow-elevated: 0 16px 40px -6px rgba(0, 0, 0, 0.12);
+}
+
+/* ============================================================
    RESET & FOUNDATIONS (ZERO HORIZONTAL OVERFLOW)
    ============================================================ */
 *, *::before, *::after {
@@ -619,7 +653,58 @@ img {
 .nav-actions {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
+}
+
+.btn-theme-nav {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: var(--radius-sm);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--border-subtle);
+  color: #f1f5f9;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-theme-nav:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: var(--cyan);
+  transform: translateY(-1px);
+}
+
+.theme-icon-sun {
+  color: #fbbf24;
+}
+
+.theme-icon-moon {
+  color: #818cf8;
+}
+
+.mobile-theme-row {
+  padding: 10px 0 6px;
+  border-top: 1px solid var(--border-subtle);
+  margin-top: 4px;
+}
+
+.btn-mobile-theme {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 10px;
+  border-radius: var(--radius-sm);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-main);
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
 }
 
 .btn-brochure-nav {
@@ -786,6 +871,102 @@ img {
   height: 38px;
   background: rgba(255, 255, 255, 0.12);
   flex-shrink: 0;
+}
+
+/* Official SPONSORED BY Box (Matches College Google Site Banner) */
+.hero-sponsor-banner {
+  margin: -14px auto 32px;
+  width: 100%;
+  max-width: 860px;
+  background: rgba(10, 20, 45, 0.78);
+  border: 1.5px solid rgba(0, 229, 255, 0.35);
+  border-radius: var(--radius-md);
+  padding: 14px 24px;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), 0 0 20px rgba(0, 229, 255, 0.12);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  text-align: center;
+}
+
+.sponsor-banner-badge {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+  color: var(--cyan);
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+
+.sponsor-banner-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.sponsor-banner-logo {
+  width: 58px;
+  height: 58px;
+  border-radius: 10px;
+  background: #ffffff;
+  padding: 4px;
+  border: 1.5px solid rgba(0, 229, 255, 0.5);
+  box-shadow: 0 0 15px rgba(0, 229, 255, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.sponsor-logo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.sponsor-banner-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+}
+
+.sponsor-banner-info h3 {
+  font-family: var(--font-heading);
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  color: #ffffff;
+  margin: 0;
+  line-height: 1.25;
+}
+
+.sponsor-banner-subrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 4px;
+}
+
+.sponsor-badge-scheme {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--cyan);
+}
+
+.sponsor-badge-tagline {
+  font-size: 12px;
+  font-style: italic;
+  color: var(--text-muted);
 }
 
 /* Hero Content Grid */
@@ -1000,6 +1181,73 @@ img {
   align-items: center;
   margin-bottom: 20px;
   width: 100%;
+}
+
+/* Campus Photo + Floating Logo Combination */
+.campus-emblem-combo {
+  position: relative;
+  width: 100%;
+  max-width: 440px;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid rgba(56, 189, 248, 0.25);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  background: #000;
+  margin-bottom: 12px;
+}
+
+.campus-img-wrap {
+  position: relative;
+  width: 100%;
+  height: 190px;
+}
+
+.campus-preview-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.campus-emblem-combo:hover .campus-preview-photo {
+  transform: scale(1.03);
+}
+
+.campus-photo-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: rgba(3, 7, 18, 0.88);
+  border: 1px solid rgba(0, 229, 255, 0.4);
+  backdrop-filter: blur(10px);
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: #ffffff;
+}
+
+.emblem-float-wrap {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: #000;
+  border: 2px solid var(--cyan);
+  box-shadow: 0 0 20px rgba(0, 229, 255, 0.5);
+  overflow: hidden;
+  padding: 2px;
+}
+
+.emblem-float-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 50%;
 }
 
 .emblem-pedestal {
@@ -3091,4 +3339,597 @@ footer {
     padding: 6px 12px;
     font-size: 10px;
   }
+}
+
+/* ============================================================
+   LIGHT THEME OVERRIDES (Full Campus Academic Elegance)
+   Matches the Official College Academic Cream & Golden Maroon Palette
+   ============================================================ */
+[data-theme="light"] body {
+  background-color: #faf7f0;
+  color: #0f172a;
+}
+
+[data-theme="light"] .announcement-bar {
+  background: linear-gradient(90deg, #fef3c7 0%, #fde68a 50%, #fef3c7 100%);
+  border-bottom: 1px solid rgba(180, 83, 9, 0.22);
+}
+
+[data-theme="light"] .announcement-badge {
+  color: #92400e;
+}
+
+[data-theme="light"] .live-pulse {
+  background: #b45309;
+  box-shadow: 0 0 8px #b45309;
+}
+
+[data-theme="light"] .announcement-link {
+  color: #78350f;
+}
+
+[data-theme="light"] .announcement-link:hover,
+[data-theme="light"] .announcement-link.highlight {
+  color: #991b1b;
+}
+
+/* Navbar in Light Theme */
+[data-theme="light"] .nav-wrap {
+  background: rgba(254, 252, 247, 0.96);
+  border-bottom: 1px solid rgba(180, 83, 9, 0.18);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+}
+
+[data-theme="light"] .brand-title {
+  color: #0f172a;
+}
+
+[data-theme="light"] .brand-title span {
+  color: #881337;
+  text-shadow: none;
+}
+
+[data-theme="light"] .brand-year-tag {
+  background: rgba(136, 19, 55, 0.08);
+  border-color: rgba(136, 19, 55, 0.28);
+  color: #881337;
+}
+
+[data-theme="light"] .brand-sub {
+  color: #b45309;
+}
+
+[data-theme="light"] .brand-mark {
+  border-color: #881337;
+  box-shadow: 0 0 15px rgba(136, 19, 55, 0.2);
+}
+
+[data-theme="light"] .nav-link {
+  color: #334155;
+}
+
+[data-theme="light"] .nav-link:hover,
+[data-theme="light"] .nav-link.is-active {
+  color: #881337;
+  background: rgba(136, 19, 55, 0.06);
+}
+
+[data-theme="light"] .dropdown-icon {
+  color: #881337;
+}
+
+/* Dropdowns in Light Theme */
+[data-theme="light"] .nav-dropdown-menu,
+[data-theme="light"] .committee-quick-menu {
+  background: rgba(255, 255, 255, 0.98);
+  border: 1px solid rgba(180, 83, 9, 0.25);
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.12), 0 0 20px rgba(180, 83, 9, 0.08);
+}
+
+[data-theme="light"] .nav-dropdown-header {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="light"] .nav-dropdown-header span {
+  color: #881337;
+}
+
+[data-theme="light"] .nav-dropdown-item:hover {
+  background: rgba(136, 19, 55, 0.06);
+  border-color: rgba(136, 19, 55, 0.2);
+}
+
+[data-theme="light"] .nav-dropdown-item-title strong {
+  color: #0f172a;
+}
+
+[data-theme="light"] .nav-dropdown-item:hover .nav-dropdown-item-title strong {
+  color: #881337;
+}
+
+[data-theme="light"] .nav-dropdown-arrow {
+  color: #94a3b8;
+}
+
+[data-theme="light"] .nav-dropdown-item:hover .nav-dropdown-arrow {
+  color: #881337;
+}
+
+/* Committee Quick Menu in Light Theme */
+[data-theme="light"] .committee-btn-label {
+  color: #0f172a;
+}
+
+[data-theme="light"] .committee-quick-btn:hover {
+  background: rgba(136, 19, 55, 0.06);
+  border-color: rgba(136, 19, 55, 0.22);
+}
+
+[data-theme="light"] .committee-quick-btn:hover .committee-btn-label {
+  color: #881337;
+}
+
+[data-theme="light"] .committee-btn-sub {
+  color: #64748b;
+}
+
+[data-theme="light"] .committee-quick-divider {
+  background: linear-gradient(to bottom, transparent, rgba(180, 83, 9, 0.3) 15%, rgba(180, 83, 9, 0.3) 85%, transparent);
+}
+
+[data-theme="light"] .committee-stack-sep {
+  background: rgba(0, 0, 0, 0.08);
+}
+
+/* Nav Actions in Light Theme */
+[data-theme="light"] .btn-theme-nav {
+  background: rgba(0, 0, 0, 0.04);
+  border-color: rgba(0, 0, 0, 0.12);
+  color: #1e293b;
+}
+
+[data-theme="light"] .btn-theme-nav:hover {
+  background: rgba(0, 0, 0, 0.08);
+  border-color: #881337;
+}
+
+[data-theme="light"] .btn-brochure-nav {
+  background: rgba(0, 0, 0, 0.04);
+  border-color: rgba(0, 0, 0, 0.12);
+  color: #1e293b;
+}
+
+[data-theme="light"] .btn-brochure-nav:hover {
+  background: rgba(0, 0, 0, 0.08);
+  color: #881337;
+  border-color: rgba(136, 19, 55, 0.3);
+}
+
+[data-theme="light"] .btn-register-nav {
+  background: linear-gradient(135deg, #881337 0%, #1e3a8a 100%);
+  color: #ffffff;
+  box-shadow: 0 4px 15px rgba(136, 19, 55, 0.3);
+}
+
+[data-theme="light"] .menu-toggle {
+  color: #0f172a;
+}
+
+/* Mobile Nav in Light Theme */
+[data-theme="light"] .nav-links {
+  background: #fbf9f4;
+  border-bottom: 1px solid rgba(180, 83, 9, 0.2);
+}
+
+[data-theme="light"] .btn-mobile-theme {
+  background: rgba(0, 0, 0, 0.04);
+  border-color: rgba(0, 0, 0, 0.12);
+  color: #0f172a;
+}
+
+/* Hero Section in Light Theme (Exact Replica of Reference Banner) */
+[data-theme="light"] .hero {
+  background: radial-gradient(circle at 50% -10%, #fef3c7 0%, transparent 60%),
+              radial-gradient(circle at 85% 50%, rgba(180, 83, 9, 0.08) 0%, transparent 50%),
+              #faf7f0;
+  border-bottom: 1px solid rgba(180, 83, 9, 0.18);
+}
+
+[data-theme="light"] .hero-radial-bg {
+  display: none;
+}
+
+[data-theme="light"] .hero .quantum-canvas {
+  opacity: 0.14;
+  mix-blend-mode: multiply;
+}
+
+[data-theme="light"] .hero-institutional-bar {
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid rgba(180, 83, 9, 0.22);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="light"] .inst-title {
+  color: #0f172a;
+}
+
+[data-theme="light"] .inst-sub {
+  color: #64748b;
+}
+
+[data-theme="light"] .inst-divider {
+  background: rgba(180, 83, 9, 0.2);
+}
+
+[data-theme="light"] .inst-logo-frame {
+  border-color: rgba(180, 83, 9, 0.4);
+  box-shadow: 0 0 10px rgba(180, 83, 9, 0.15);
+}
+
+/* SPONSORED BY Box in Light Theme */
+[data-theme="light"] .hero-sponsor-banner {
+  background: #ffffff;
+  border: 1.5px solid #d97706;
+  box-shadow: 0 8px 25px rgba(217, 119, 6, 0.12);
+}
+
+[data-theme="light"] .sponsor-banner-badge {
+  color: #b45309;
+}
+
+[data-theme="light"] .sponsor-banner-info h3 {
+  color: #0f172a;
+}
+
+[data-theme="light"] .sponsor-badge-scheme {
+  color: #881337;
+}
+
+[data-theme="light"] .sponsor-badge-tagline {
+  color: #64748b;
+}
+
+[data-theme="light"] .sponsor-banner-logo {
+  border-color: #d97706;
+  box-shadow: 0 0 12px rgba(217, 119, 6, 0.2);
+}
+
+/* Hero Content in Light Theme */
+[data-theme="light"] .grant-kicker {
+  background: rgba(180, 83, 9, 0.08);
+  border-color: rgba(180, 83, 9, 0.28);
+  color: #78350f;
+}
+
+[data-theme="light"] .grant-dot {
+  background: #b45309;
+  box-shadow: 0 0 8px #b45309;
+}
+
+[data-theme="light"] .hero-title {
+  color: #881337;
+}
+
+[data-theme="light"] .quantum-title-accent {
+  color: #881337;
+  text-shadow: none;
+}
+
+[data-theme="light"] .hero-year {
+  background: rgba(136, 19, 55, 0.08);
+  border-color: rgba(136, 19, 55, 0.28);
+  color: #881337;
+}
+
+[data-theme="light"] .hero-subtitle {
+  color: #1e293b;
+}
+
+[data-theme="light"] .theme-quote-badge {
+  background: #ffffff;
+  border-color: rgba(180, 83, 9, 0.25);
+  color: #78350f;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+}
+
+[data-theme="light"] .theme-quote-badge svg {
+  color: #b45309;
+}
+
+[data-theme="light"] .motto-strip {
+  background: #ffffff;
+  border-color: rgba(0, 0, 0, 0.1);
+  color: #334155;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+[data-theme="light"] .motto-sep {
+  color: #cbd5e1;
+}
+
+[data-theme="light"] .hero-host {
+  color: #475569;
+}
+
+[data-theme="light"] .hero-host strong {
+  color: #0f172a;
+}
+
+[data-theme="light"] .btn-primary-glow {
+  background: linear-gradient(135deg, #881337 0%, #1e3a8a 100%);
+  color: #ffffff;
+  box-shadow: 0 6px 20px rgba(136, 19, 55, 0.3);
+}
+
+[data-theme="light"] .btn-primary-glow:hover {
+  box-shadow: 0 8px 25px rgba(136, 19, 55, 0.45);
+}
+
+[data-theme="light"] .btn-glass {
+  background: #ffffff;
+  border-color: rgba(0, 0, 0, 0.12);
+  color: #1e293b;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="light"] .btn-glass:hover {
+  background: #f8fafc;
+  border-color: #881337;
+  color: #881337;
+}
+
+[data-theme="light"] .hero-meta-strip {
+  color: #64748b;
+}
+
+[data-theme="light"] .meta-item svg {
+  color: #881337;
+}
+
+[data-theme="light"] .meta-item a {
+  color: #881337;
+}
+
+/* Hero Visual Cards in Light Theme */
+[data-theme="light"] .hero-emblem-card,
+[data-theme="light"] .quantum-core-card {
+  background: #ffffff;
+  border: 1px solid rgba(180, 83, 9, 0.22);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="light"] .campus-emblem-combo {
+  border-color: rgba(180, 83, 9, 0.25);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="light"] .campus-photo-badge {
+  background: rgba(255, 255, 255, 0.92);
+  border-color: rgba(180, 83, 9, 0.4);
+  color: #0f172a;
+}
+
+[data-theme="light"] .emblem-float-wrap {
+  background: #ffffff;
+  border-color: #881337;
+  box-shadow: 0 0 15px rgba(136, 19, 55, 0.25);
+}
+
+[data-theme="light"] .emblem-meta-title {
+  color: #0f172a;
+}
+
+[data-theme="light"] .quick-link-pill {
+  background: #f8fafc;
+  border-color: rgba(0, 0, 0, 0.1);
+  color: #334155;
+}
+
+[data-theme="light"] .quick-link-pill:hover {
+  background: #f1f5f9;
+  border-color: #881337;
+  color: #881337;
+}
+
+[data-theme="light"] .countdown-box {
+  background: #fdfbf7;
+  border-color: rgba(180, 83, 9, 0.22);
+}
+
+[data-theme="light"] .countdown-number {
+  color: #881337;
+}
+
+[data-theme="light"] .countdown-label {
+  color: #64748b;
+}
+
+/* Stats Strip in Light Theme */
+[data-theme="light"] .stats-strip {
+  background: #f4eee2;
+  border-color: rgba(180, 83, 9, 0.18);
+}
+
+[data-theme="light"] .stat-item {
+  border-color: rgba(180, 83, 9, 0.18);
+}
+
+[data-theme="light"] .stat-icon {
+  background: rgba(136, 19, 55, 0.08);
+  border-color: rgba(136, 19, 55, 0.2);
+  color: #881337;
+}
+
+[data-theme="light"] .stat-content strong {
+  color: #0f172a;
+}
+
+[data-theme="light"] .stat-content span {
+  color: #64748b;
+}
+
+/* Section Headings in Light Theme */
+[data-theme="light"] .eyebrow {
+  color: #881337;
+}
+
+[data-theme="light"] .section-head h2 {
+  color: #0f172a;
+}
+
+[data-theme="light"] .section-head.text-center h2::after {
+  background: linear-gradient(90deg, #881337, #1e3a8a);
+}
+
+[data-theme="light"] .section-head p {
+  color: #475569;
+}
+
+/* All Component Cards in Light Theme */
+[data-theme="light"] .about-card,
+[data-theme="light"] .topic-card,
+[data-theme="light"] .speaker-card,
+[data-theme="light"] .timeline-card,
+[data-theme="light"] .core-card,
+[data-theme="light"] .advisory-row,
+[data-theme="light"] .volunteer-card,
+[data-theme="light"] .fee-card,
+[data-theme="light"] .payment-card,
+[data-theme="light"] .portal-card,
+[data-theme="light"] .venue-card,
+[data-theme="light"] .faq-item,
+[data-theme="light"] .contact-info-card,
+[data-theme="light"] .contact-form-card {
+  background: #ffffff;
+  border: 1px solid rgba(180, 83, 9, 0.18);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="light"] .about-card:hover,
+[data-theme="light"] .topic-card:hover,
+[data-theme="light"] .speaker-card:hover,
+[data-theme="light"] .core-card:hover,
+[data-theme="light"] .volunteer-card:hover,
+[data-theme="light"] .fee-card:hover {
+  border-color: #881337;
+  box-shadow: 0 8px 25px rgba(136, 19, 55, 0.12);
+}
+
+[data-theme="light"] .topic-card strong,
+[data-theme="light"] .speaker-card h3,
+[data-theme="light"] .core-card h3,
+[data-theme="light"] .advisory-row h4,
+[data-theme="light"] .volunteer-card h3,
+[data-theme="light"] .fee-title,
+[data-theme="light"] .faq-question strong {
+  color: #0f172a;
+}
+
+[data-theme="light"] .speaker-institution,
+[data-theme="light"] .core-card p,
+[data-theme="light"] .advisory-row p,
+[data-theme="light"] .volunteer-dept,
+[data-theme="light"] .faq-answer p {
+  color: #64748b;
+}
+
+[data-theme="light"] .core-role {
+  color: #881337;
+  background: rgba(136, 19, 55, 0.08);
+  border-color: rgba(136, 19, 55, 0.25);
+}
+
+[data-theme="light"] .volunteer-role {
+  color: #047857;
+}
+
+[data-theme="light"] .volunteer-badge-icon {
+  background: rgba(4, 120, 87, 0.1);
+  border-color: rgba(4, 120, 87, 0.25);
+  color: #047857;
+}
+
+/* Tabs in Light Theme */
+[data-theme="light"] .comm-tab {
+  background: #f1f5f9;
+  color: #475569;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="light"] .comm-tab:hover {
+  color: #0f172a;
+}
+
+[data-theme="light"] .comm-tab.active {
+  background: #881337;
+  color: #ffffff;
+  border-color: #881337;
+  box-shadow: 0 4px 15px rgba(136, 19, 55, 0.25);
+}
+
+[data-theme="light"] .day-tab {
+  background: #f1f5f9;
+  color: #475569;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="light"] .day-tab.active {
+  background: #1e3a8a;
+  color: #ffffff;
+  border-color: #1e3a8a;
+}
+
+/* Modals & Portals in Light Theme */
+[data-theme="light"] .modal-content,
+[data-theme="light"] .portal-card {
+  background: #ffffff;
+  border-color: rgba(180, 83, 9, 0.25);
+  color: #0f172a;
+}
+
+[data-theme="light"] .portal-form input,
+[data-theme="light"] .portal-form select,
+[data-theme="light"] .portal-form textarea {
+  background: #f8fafc;
+  border-color: rgba(0, 0, 0, 0.15);
+  color: #0f172a;
+}
+
+[data-theme="light"] .portal-form input:focus,
+[data-theme="light"] .portal-form select:focus,
+[data-theme="light"] .portal-form textarea:focus {
+  border-color: #881337;
+  background: #ffffff;
+}
+
+/* Footer & Watermark in Light Theme */
+[data-theme="light"] footer {
+  background: #f4eee2;
+  border-top: 1px solid rgba(180, 83, 9, 0.2);
+  color: #475569;
+}
+
+[data-theme="light"] .footer-title,
+[data-theme="light"] .footer-col h4 {
+  color: #0f172a;
+}
+
+[data-theme="light"] .footer-bottom {
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="light"] .floating-watermark {
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid rgba(180, 83, 9, 0.32);
+  color: #0f172a;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="light"] .watermark-dot {
+  background: #881337;
+}
+
+[data-theme="light"] .floating-watermark strong {
+  color: #881337;
 }

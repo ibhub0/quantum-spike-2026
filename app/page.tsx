@@ -430,24 +430,6 @@ export default function Home() {
                 </div>
               );
             })}
-            <div className="mobile-theme-row">
-              <button
-                onClick={toggleTheme}
-                className="btn-mobile-theme"
-              >
-                {theme === "dark" ? (
-                  <>
-                    <Sun size={16} className="theme-icon-sun" />
-                    <span>Switch to Light Theme</span>
-                  </>
-                ) : (
-                  <>
-                    <Moon size={16} className="theme-icon-moon" />
-                    <span>Switch to Dark Theme</span>
-                  </>
-                )}
-              </button>
-            </div>
           </div>
 
           <div className="nav-actions">

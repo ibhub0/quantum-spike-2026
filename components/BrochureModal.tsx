@@ -20,11 +20,11 @@ export default function BrochureModal({ isOpen, onClose }: BrochureModalProps) {
       document.body.style.overflow = "hidden";
       window.addEventListener("keydown", handleKeyDown);
     } else {
-      document.body.style.overflow = "auto";
+      document.body.style.overflow = "";
       setScale(1);
     }
     return () => {
-      document.body.style.overflow = "auto";
+      document.body.style.overflow = "";
       window.removeEventListener("keydown", handleKeyDown);
     };
   }, [isOpen, onClose]);

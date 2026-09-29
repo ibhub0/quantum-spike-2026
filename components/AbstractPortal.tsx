@@ -450,7 +450,7 @@ Submission Checklist:
                   <button
                     type="submit"
                     disabled={status === "submitting"}
-                    className="button primary w-full submit-btn"
+                    className="btn-submit-abstract w-full submit-btn"
                   >
                     {status === "submitting" ? (
                       <span>Recording Submission...</span>

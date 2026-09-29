@@ -90,8 +90,6 @@ html {
   scroll-behavior: smooth;
   color-scheme: dark;
   width: 100%;
-  max-width: 100%;
-  overflow-x: clip;
 }
 
 body {
@@ -100,8 +98,6 @@ body {
   font-family: var(--font-body);
   line-height: 1.6;
   width: 100%;
-  max-width: 100%;
-  overflow-x: clip;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -248,8 +244,8 @@ img {
 .nav-wrap {
   position: sticky;
   top: 0;
-  z-index: 50;
-  background: rgba(3, 7, 18, 0.92);
+  z-index: 100;
+  background: rgba(3, 7, 18, 0.94);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border-bottom: 1px solid var(--border-subtle);
@@ -2919,13 +2915,15 @@ footer {
   margin-bottom: 16px;
 }
 
-.repo-items {
+.repo-items,
+.download-items {
   display: flex;
   flex-direction: column;
   gap: 11px;
 }
 
-.repo-item {
+.repo-item,
+.download-item {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -2936,28 +2934,33 @@ footer {
   transition: all 0.2s;
 }
 
-.repo-item:hover {
+.repo-item:hover,
+.download-item:hover {
   border-color: rgba(0, 229, 255, 0.3);
 }
 
-.repo-left {
+.repo-left,
+.download-item .item-icon {
   display: flex;
   align-items: center;
   gap: 12px;
 }
 
-.repo-left svg {
+.repo-left svg,
+.download-item .item-icon svg {
   color: var(--cyan);
   flex-shrink: 0;
 }
 
-.repo-text strong {
+.repo-text strong,
+.download-item .item-content strong {
   display: block;
   font-size: 13px;
   color: #ffffff;
 }
 
-.repo-text span {
+.repo-text span,
+.download-item .item-content span {
   font-size: 11px;
   color: var(--text-muted);
 }
@@ -3789,18 +3792,22 @@ footer {
 /* All Component Cards in Light Theme */
 [data-theme="light"] .about-card,
 [data-theme="light"] .topic-card,
+[data-theme="light"] .theme-card,
 [data-theme="light"] .speaker-card,
 [data-theme="light"] .timeline-card,
 [data-theme="light"] .core-card,
 [data-theme="light"] .advisory-row,
 [data-theme="light"] .volunteer-card,
 [data-theme="light"] .fee-card,
-[data-theme="light"] .payment-card,
+[data-theme="light"] .payment-details-card,
 [data-theme="light"] .portal-card,
+[data-theme="light"] .guidelines-card,
+[data-theme="light"] .form-card,
+[data-theme="light"] .repository-card,
 [data-theme="light"] .venue-card,
+[data-theme="light"] .travel-card,
 [data-theme="light"] .faq-item,
-[data-theme="light"] .contact-info-card,
-[data-theme="light"] .contact-form-card {
+[data-theme="light"] .contact-card {
   background: #ffffff;
   border: 1px solid rgba(180, 83, 9, 0.18);
   box-shadow: 0 4px 18px rgba(0, 0, 0, 0.05);
@@ -3808,6 +3815,7 @@ footer {
 
 [data-theme="light"] .about-card:hover,
 [data-theme="light"] .topic-card:hover,
+[data-theme="light"] .theme-card:hover,
 [data-theme="light"] .speaker-card:hover,
 [data-theme="light"] .core-card:hover,
 [data-theme="light"] .volunteer-card:hover,
@@ -3816,41 +3824,149 @@ footer {
   box-shadow: 0 8px 25px rgba(136, 19, 55, 0.12);
 }
 
-[data-theme="light"] .topic-card strong,
-[data-theme="light"] .speaker-card h3,
-[data-theme="light"] .core-card h3,
-[data-theme="light"] .advisory-row h4,
-[data-theme="light"] .volunteer-card h3,
-[data-theme="light"] .fee-title,
-[data-theme="light"] .faq-question strong {
+/* About Section in Light Theme */
+[data-theme="light"] .about-card p {
+  color: #334155;
+}
+
+[data-theme="light"] .about-highlights {
+  background: #fdfbf7;
+  border: 1px solid rgba(180, 83, 9, 0.2);
+}
+
+[data-theme="light"] .about-hl-item {
+  color: #1e293b;
+}
+
+[data-theme="light"] .about-hl-item svg {
+  color: #881337;
+}
+
+[data-theme="light"] .college-info strong {
   color: #0f172a;
 }
 
-[data-theme="light"] .speaker-institution,
-[data-theme="light"] .core-card p,
-[data-theme="light"] .advisory-row p,
-[data-theme="light"] .volunteer-dept,
-[data-theme="light"] .faq-answer p {
+[data-theme="light"] .college-info span {
   color: #64748b;
 }
 
-[data-theme="light"] .core-role {
+[data-theme="light"] .deadlines-card {
+  background: #ffffff;
+  border: 1px solid rgba(180, 83, 9, 0.18);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="light"] .deadlines-card h3 {
+  color: #0f172a;
+}
+
+[data-theme="light"] .deadline-row {
+  background: #fdfbf7;
+  border: 1px solid rgba(180, 83, 9, 0.15);
+}
+
+[data-theme="light"] .deadline-row.highlight {
+  background: #fef3c7;
+  border-color: rgba(180, 83, 9, 0.35);
+}
+
+[data-theme="light"] .deadline-label {
+  color: #1e293b;
+}
+
+[data-theme="light"] .deadline-date {
   color: #881337;
+}
+
+/* Research Themes in Light Theme */
+[data-theme="light"] .themes-section {
+  background: #faf7f0;
+}
+
+[data-theme="light"] .theme-card {
+  border-left: 4px solid #881337;
+}
+
+[data-theme="light"] .theme-card:hover {
+  border-left-color: #1e3a8a;
+}
+
+[data-theme="light"] .theme-number {
   background: rgba(136, 19, 55, 0.08);
-  border-color: rgba(136, 19, 55, 0.25);
+  color: #881337;
 }
 
-[data-theme="light"] .volunteer-role {
-  color: #047857;
+[data-theme="light"] .theme-content h3 {
+  color: #0f172a;
 }
 
-[data-theme="light"] .volunteer-badge-icon {
-  background: rgba(4, 120, 87, 0.1);
-  border-color: rgba(4, 120, 87, 0.25);
-  color: #047857;
+[data-theme="light"] .theme-content p {
+  color: #64748b;
 }
 
-/* Tabs in Light Theme */
+/* Eminent Speakers in Light Theme */
+[data-theme="light"] .speaker-card h3 {
+  color: #0f172a;
+}
+
+[data-theme="light"] .speaker-institution {
+  color: #881337;
+}
+
+/* Programme Schedule in Light Theme */
+[data-theme="light"] .schedule-section {
+  background: #faf7f0;
+}
+
+[data-theme="light"] .day-switcher {
+  background: #f1f5f9;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="light"] .day-tab {
+  background: #f1f5f9;
+  color: #475569;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="light"] .day-tab.active {
+  background: #881337;
+  color: #ffffff;
+  border-color: #881337;
+  box-shadow: 0 4px 15px rgba(136, 19, 55, 0.25);
+}
+
+[data-theme="light"] .schedule-day-title {
+  color: #0f172a;
+}
+
+[data-theme="light"] .schedule-day-sub {
+  color: #881337;
+}
+
+[data-theme="light"] .timeline-item {
+  background: #fdfbf7;
+  border: 1px solid rgba(180, 83, 9, 0.14);
+}
+
+[data-theme="light"] .timeline-time {
+  color: #881337;
+}
+
+[data-theme="light"] .timeline-content h4 {
+  color: #0f172a;
+}
+
+[data-theme="light"] .timeline-content p {
+  color: #475569;
+}
+
+[data-theme="light"] .timeline-badge {
+  background: rgba(136, 19, 55, 0.08);
+  color: #881337;
+}
+
+/* Leadership & Committees in Light Theme */
 [data-theme="light"] .comm-tab {
   background: #f1f5f9;
   color: #475569;
@@ -3868,39 +3984,474 @@ footer {
   box-shadow: 0 4px 15px rgba(136, 19, 55, 0.25);
 }
 
-[data-theme="light"] .day-tab {
-  background: #f1f5f9;
+[data-theme="light"] .core-card h3 {
+  color: #0f172a;
+}
+
+[data-theme="light"] .core-card p {
   color: #475569;
-  border: 1px solid rgba(0, 0, 0, 0.1);
 }
 
-[data-theme="light"] .day-tab.active {
-  background: #1e3a8a;
+[data-theme="light"] .core-role {
+  color: #881337;
+  background: rgba(136, 19, 55, 0.08);
+  border-color: rgba(136, 19, 55, 0.25);
+}
+
+[data-theme="light"] .advisory-row {
+  border-left: 4px solid #1e3a8a;
+}
+
+[data-theme="light"] .advisory-row h4 {
+  color: #0f172a;
+}
+
+[data-theme="light"] .advisory-row p {
+  color: #64748b;
+}
+
+[data-theme="light"] .advisory-row svg {
+  color: #1e3a8a;
+}
+
+[data-theme="light"] .volunteer-card {
+  border-top: 4px solid #047857;
+}
+
+[data-theme="light"] .volunteer-card h3 {
+  color: #0f172a;
+}
+
+[data-theme="light"] .volunteer-role {
+  color: #047857;
+}
+
+[data-theme="light"] .volunteer-dept {
+  color: #64748b;
+}
+
+[data-theme="light"] .volunteer-badge-icon {
+  background: rgba(4, 120, 87, 0.1);
+  border-color: rgba(4, 120, 87, 0.25);
+  color: #047857;
+}
+
+/* ============================================================
+   REGISTRATION & FEES IN LIGHT THEME (Fixes Disappearing Fees)
+   ============================================================ */
+[data-theme="light"] .registration-hub {
+  background: #faf7f0;
+}
+
+[data-theme="light"] .fee-card {
+  background: #ffffff;
+  border: 1px solid rgba(180, 83, 9, 0.2);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="light"] .fee-card.featured {
+  background: linear-gradient(180deg, #fffdf8 0%, #fff7ed 100%);
+  border: 2px solid #881337;
+  box-shadow: 0 10px 30px rgba(136, 19, 55, 0.12);
+}
+
+[data-theme="light"] .popular-badge {
+  background: linear-gradient(135deg, #881337 0%, #d97706 100%);
   color: #ffffff;
-  border-color: #1e3a8a;
+  box-shadow: 0 4px 12px rgba(136, 19, 55, 0.25);
 }
 
-/* Modals & Portals in Light Theme */
-[data-theme="light"] .modal-content,
-[data-theme="light"] .portal-card {
+[data-theme="light"] .fee-category {
+  color: #0f172a;
+}
+
+[data-theme="light"] .fee-desc {
+  color: #475569;
+}
+
+[data-theme="light"] .fee-price {
+  color: #881337;
+}
+
+[data-theme="light"] .fee-price span {
+  color: #64748b;
+}
+
+[data-theme="light"] .fee-perk-item {
+  color: #1e293b;
+}
+
+[data-theme="light"] .fee-perk-item svg {
+  color: #047857;
+}
+
+/* Payment & UPI Card in Light Theme */
+[data-theme="light"] .payment-details-card {
   background: #ffffff;
-  border-color: rgba(180, 83, 9, 0.25);
+  border: 1px solid rgba(180, 83, 9, 0.22);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+}
+
+[data-theme="light"] .qr-box {
+  background: #fdfbf7;
+  border: 1px solid rgba(180, 83, 9, 0.2);
+}
+
+[data-theme="light"] .qr-box span {
   color: #0f172a;
 }
 
-[data-theme="light"] .portal-form input,
-[data-theme="light"] .portal-form select,
-[data-theme="light"] .portal-form textarea {
-  background: #f8fafc;
-  border-color: rgba(0, 0, 0, 0.15);
+[data-theme="light"] .bank-info h3 {
   color: #0f172a;
 }
 
-[data-theme="light"] .portal-form input:focus,
-[data-theme="light"] .portal-form select:focus,
-[data-theme="light"] .portal-form textarea:focus {
+[data-theme="light"] .bank-field {
+  background: #fdfbf7;
+  border: 1px solid rgba(180, 83, 9, 0.18);
+}
+
+[data-theme="light"] .field-label {
+  color: #64748b;
+}
+
+[data-theme="light"] .field-value {
+  color: #0f172a;
+}
+
+[data-theme="light"] .btn-copy {
+  color: #64748b;
+}
+
+[data-theme="light"] .btn-copy:hover {
+  color: #881337;
+  background: rgba(136, 19, 55, 0.08);
+}
+
+[data-theme="light"] .payment-note {
+  background: #fef3c7;
+  border: 1px solid rgba(180, 83, 9, 0.25);
+  color: #78350f;
+}
+
+[data-theme="light"] .payment-note strong {
+  color: #92400e;
+}
+
+/* ============================================================
+   CALL FOR ABSTRACTS & PORTAL IN LIGHT THEME
+   ============================================================ */
+[data-theme="light"] .portal-section {
+  background: #faf7f0;
+}
+
+[data-theme="light"] .card-badge {
+  background: rgba(136, 19, 55, 0.08);
+  color: #881337;
+}
+
+[data-theme="light"] .guidelines-card h3,
+[data-theme="light"] .form-card h3 {
+  color: #0f172a;
+}
+
+[data-theme="light"] .guidelines-list {
+  color: #334155;
+}
+
+[data-theme="light"] .guidelines-list li strong {
+  color: #0f172a;
+}
+
+[data-theme="light"] .awards-callout {
+  background: #fef3c7;
+  border: 1px solid rgba(180, 83, 9, 0.3);
+}
+
+[data-theme="light"] .awards-callout strong {
+  color: #92400e;
+}
+
+[data-theme="light"] .awards-callout p {
+  color: #78350f;
+}
+
+[data-theme="light"] .awards-callout .award-icon {
+  color: #b45309;
+}
+
+[data-theme="light"] .repo-desc,
+[data-theme="light"] .form-sub {
+  color: #64748b;
+}
+
+[data-theme="light"] .download-item,
+[data-theme="light"] .repo-item {
+  background: #fdfbf7;
+  border: 1px solid rgba(180, 83, 9, 0.18);
+}
+
+[data-theme="light"] .download-item:hover,
+[data-theme="light"] .repo-item:hover {
   border-color: #881337;
+  box-shadow: 0 4px 15px rgba(136, 19, 55, 0.08);
+}
+
+[data-theme="light"] .download-item .item-content strong,
+[data-theme="light"] .repo-text strong {
+  color: #0f172a;
+}
+
+[data-theme="light"] .download-item .item-content span,
+[data-theme="light"] .repo-text span {
+  color: #64748b;
+}
+
+[data-theme="light"] .download-item .item-icon svg,
+[data-theme="light"] .repo-left svg {
+  color: #881337;
+}
+
+[data-theme="light"] .btn-download {
+  background: rgba(136, 19, 55, 0.08);
+  color: #881337;
+}
+
+[data-theme="light"] .btn-download:hover {
+  background: #881337;
+  color: #ffffff;
+}
+
+[data-theme="light"] .form-group label {
+  color: #0f172a;
+}
+
+[data-theme="light"] .form-group label .req {
+  color: #dc2626;
+}
+
+[data-theme="light"] .form-group input,
+[data-theme="light"] .form-group select,
+[data-theme="light"] .form-group textarea {
   background: #ffffff;
+  border: 1.5px solid rgba(0, 0, 0, 0.16);
+  color: #0f172a;
+}
+
+[data-theme="light"] .form-group input:focus,
+[data-theme="light"] .form-group select:focus,
+[data-theme="light"] .form-group textarea:focus {
+  border-color: #881337;
+  box-shadow: 0 0 10px rgba(136, 19, 55, 0.15);
+  background: #ffffff;
+}
+
+[data-theme="light"] .form-group select option {
+  background: #ffffff;
+  color: #0f172a;
+}
+
+[data-theme="light"] .btn-submit-abstract,
+[data-theme="light"] .submit-btn {
+  background: linear-gradient(135deg, #881337 0%, #1e3a8a 100%);
+  color: #ffffff;
+  box-shadow: 0 4px 15px rgba(136, 19, 55, 0.25);
+}
+
+[data-theme="light"] .form-disclaimer {
+  color: #64748b;
+}
+
+[data-theme="light"] .form-success-box h4 {
+  color: #0f172a;
+}
+
+[data-theme="light"] .form-success-box p {
+  color: #334155;
+}
+
+[data-theme="light"] .next-steps-card {
+  background: #fef3c7;
+  border: 1px solid rgba(180, 83, 9, 0.3);
+}
+
+[data-theme="light"] .next-steps-card strong {
+  color: #92400e;
+}
+
+[data-theme="light"] .next-steps-card p {
+  color: #78350f;
+}
+
+[data-theme="light"] .next-steps-card a {
+  background: #881337;
+  color: #ffffff;
+}
+
+[data-theme="light"] .btn-submit-another {
+  background: #f1f5f9;
+  color: #0f172a;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+/* ============================================================
+   VENUE & TRAVEL IN LIGHT THEME
+   ============================================================ */
+[data-theme="light"] .venue-section {
+  background: #faf7f0;
+}
+
+[data-theme="light"] .venue-details h3 {
+  color: #0f172a;
+}
+
+[data-theme="light"] .venue-details p {
+  color: #475569;
+}
+
+[data-theme="light"] .travel-icon {
+  background: rgba(136, 19, 55, 0.08);
+  border: 1px solid rgba(136, 19, 55, 0.2);
+  color: #881337;
+}
+
+[data-theme="light"] .travel-info h4 {
+  color: #0f172a;
+}
+
+[data-theme="light"] .travel-tag {
+  color: #047857;
+  background: rgba(4, 120, 87, 0.1);
+}
+
+/* ============================================================
+   FAQ & CONTACT IN LIGHT THEME
+   ============================================================ */
+[data-theme="light"] .faq-button {
+  color: #0f172a;
+}
+
+[data-theme="light"] .faq-button svg {
+  color: #881337;
+}
+
+[data-theme="light"] .faq-answer {
+  color: #475569;
+}
+
+[data-theme="light"] .contact-section {
+  background: #faf7f0;
+}
+
+[data-theme="light"] .contact-row {
+  border-bottom: 1px solid rgba(180, 83, 9, 0.14);
+}
+
+[data-theme="light"] .contact-row svg {
+  color: #881337;
+}
+
+[data-theme="light"] .contact-row strong {
+  color: #0f172a;
+}
+
+[data-theme="light"] .contact-row span,
+[data-theme="light"] .contact-row a {
+  color: #475569;
+}
+
+[data-theme="light"] .contact-row a:hover {
+  color: #881337;
+}
+
+/* ============================================================
+   MODALS IN LIGHT THEME (Speaker & Brochure Lightbox)
+   ============================================================ */
+[data-theme="light"] .speaker-modal-card {
+  background: #ffffff;
+  border: 1px solid rgba(180, 83, 9, 0.3);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.2);
+}
+
+[data-theme="light"] .speaker-modal-meta h3 {
+  color: #0f172a;
+}
+
+[data-theme="light"] .speaker-modal-inst {
+  color: #881337;
+}
+
+[data-theme="light"] .speaker-info-block {
+  background: #fdfbf7;
+  border: 1px solid rgba(180, 83, 9, 0.2);
+}
+
+[data-theme="light"] .speaker-info-text {
+  color: #334155;
+}
+
+[data-theme="light"] .speaker-modal-footer {
+  border-top: 1px solid rgba(180, 83, 9, 0.18);
+  color: #64748b;
+}
+
+[data-theme="light"] .btn-close-speaker {
+  background: #881337;
+  color: #ffffff;
+}
+
+[data-theme="light"] .speaker-modal-close {
+  color: #64748b;
+}
+
+[data-theme="light"] .speaker-modal-close:hover {
+  color: #0f172a;
+}
+
+[data-theme="light"] .lightbox-panel {
+  background: #ffffff;
+  border: 1px solid rgba(180, 83, 9, 0.3);
+}
+
+[data-theme="light"] .lightbox-header {
+  background: #fdfbf7;
+  border-bottom: 1px solid rgba(180, 83, 9, 0.18);
+}
+
+[data-theme="light"] .lightbox-title strong {
+  color: #0f172a;
+}
+
+[data-theme="light"] .lightbox-title span {
+  color: #64748b;
+}
+
+[data-theme="light"] .tool-btn {
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  color: #334155;
+}
+
+[data-theme="light"] .tool-btn:hover {
+  background: #f1f5f9;
+  color: #0f172a;
+}
+
+[data-theme="light"] .tool-btn.highlight {
+  background: #881337;
+  color: #ffffff;
+  border-color: #881337;
+}
+
+[data-theme="light"] .close-btn {
+  color: #64748b;
+}
+
+[data-theme="light"] .close-btn:hover {
+  color: #0f172a;
+}
+
+[data-theme="light"] .lightbox-viewport {
+  background: #f1f5f9;
 }
 
 /* Footer & Watermark in Light Theme */

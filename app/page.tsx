@@ -524,30 +524,6 @@ export default function Home() {
             </div>
           </div>
 
-          {/* SPONSORED BY Box (Matches the official college reference image) */}
-          <div className="hero-sponsor-banner">
-            <div className="sponsor-banner-badge">
-              <span>✦ SPONSORED BY ✦</span>
-            </div>
-            <div className="sponsor-banner-content">
-              <div className="sponsor-banner-logo">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={site.funding.logo}
-                  alt="ANRF SERB-DST Emblem"
-                  className="sponsor-logo-img"
-                />
-              </div>
-              <div className="sponsor-banner-info">
-                <h3>{site.funding.agency}</h3>
-                <div className="sponsor-banner-subrow">
-                  <span className="sponsor-badge-scheme">{site.funding.scheme}</span>
-                  <span className="sponsor-badge-tagline">{site.funding.tagline}</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
           <div className="hero-layout">
             <div className="hero-content">
               <div className="grant-kicker">

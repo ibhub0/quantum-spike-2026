@@ -1,0 +1,13 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Quantum Spike//Conference 2026//EN
+BEGIN:VEVENT
+UID:quantum-spike-2026@conference
+DTSTAMP:20261004T000000Z
+DTSTART;VALUE=DATE:20261008
+DTEND;VALUE=DATE:20261010
+SUMMARY:Quantum Spike 2026
+LOCATION:Bankura Sammilani College\, West Bengal\, India
+DESCRIPTION:National Conference on Contemporary Physics\, Optics and Emerging Technologies. Session timings to be confirmed.
+END:VEVENT
+END:VCALENDAR
